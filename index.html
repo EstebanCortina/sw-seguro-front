@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .login-container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 600px;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    .login-container input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .login-container input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script src="https://accounts.google.com/gsi/client" async></script>
+</head>
+
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <div>
+      <input type="text" name="email" placeholder="Email" required id="email">
+      <input type="password" name="password" placeholder="Password" required id="pass">
+    </div>
+    <div id="google-container">
+      <h2>Termine de iniciar sesion con google</h2>
+      <button id="google-btn"></button>
+      <a href="/sign-up.html" style="display: block;">Sign-up</a>
+    </div>
+  </div>
+  <script>
+    function hashPassword(password) {
+      // Crear un nuevo objeto CryptoJS con el hash SHA-256
+      var hashedPassword = CryptoJS.SHA256(password);
+      // Convertir el hash en una cadena hexadecimal
+      return hashedPassword.toString(CryptoJS.enc.Hex);
+    }
+    let token = null
+    google.accounts.id.initialize({
+      client_id: '7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com',
+      callback: (resp) => {
+        login(resp.credential, email.value, pass.value)
+      } //Descomentar para obtener token
+    });
+    google.accounts.id.renderButton(document.getElementById("google-btn"), {
+      theme: 'filled_blue',
+      size: 'large',
+      shape: 'rectangle',
+      width: 350
+    });
+    const google_container = document.getElementById("google-container")
+    const sign_in_button = document.getElementById("sign-in")
+    const email = document.getElementById("email")
+    const pass = document.getElementById("pass")
+    function login(token, email, pass) {
+      //primero google
+      let url = 'http:127.0.0.1:3000/sign-in';
+      const data = {
+        "email": email,
+        "pass": pass
+      };
+
+      fetch("http://127.0.0.1:3000/sign-in", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + token
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.httpStatus === 200) {
+            data.token = token
+            window.location.href = '/dashboard.html'
+            sessionStorage.setItem("session", JSON.stringify(data.data))
+          } else {
+            alert("Revise su credenciales o cree una nueva cuenta")
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    sign_in_button.addEventListener('click', () => {
+      //login(email, pass);
+      email.disabled = true
+      pass.disabled = true
+      google_container.display = 'block'
+    })
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign-up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .form-container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 300px;
+    }
+
+    .form-container label {
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre">
+    <label for="correo">Correo</label>
+    <input type="text" id="correo">
+    <label for="pass">Contraseña</label>
+    <input type="password" id="pass">
+    <label for="user_type_name">Tipo de Usuario</label>
+    <select id="user_type_name">
+      <option value="" selected disabled>Seleccione un tipo de usuario</option>
+      <option value="alumno">Alumno</option>
+      <option value="profesor">Profesor</option>
+    </select>
+    <button type="button" id="register">Registrar</button>
+  </div>
+</body>
+<script>
+  let nombre = document.getElementById("nombre");
+  let correo = document.getElementById("correo");
+  let pass = document.getElementById("pass");
+  let userType = document.getElementById("user_type_name");
+  let register = document.getElementById('register')
+
+
+  function hashPassword(password) {
+    // Crear un nuevo objeto CryptoJS con el hash SHA-256
+    var hashedPassword = CryptoJS.SHA256(password);
+    // Convertir el hash en una cadena hexadecimal
+    return hashedPassword.toString(CryptoJS.enc.Hex);
+  }
+  register.addEventListener('click', () => {
+    fetch("http://127.0.0.1:3000/sign-up", {
+      method: 'POST',
+      body: JSON.stringify({
+        "name": nombre.value,
+        "email": correo.value,
+        "pass": pass.value,
+        "user_type_name": userType.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.httpStatus === 201) {
+          alert("Usuario registrado")
+          window.location.href = '/index.html'
+        } else {
+          alert("Revise su credenciales o cree una nueva cuenta")
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</body>
+
+</html>
