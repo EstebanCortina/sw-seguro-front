@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Productos</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Estilos de la sección productos */
+        #productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .producto {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Estilos de los botones */
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: auto;
+            width: 50%; /* Reducir el ancho del botón */
+            text-align: center; /* Alinear el texto del botón al centro */
+        }
+
+        button:hover {
+            background-color: #0f6622;
+        }
+
+        /* Botón de ver carrito */
+        #btn_verCarrito {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-size: 16px;
+        }
+
+        #btn_verCarrito:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Tienda de Productos</h1>
+    </header>
+
+    <main>
+        <section id="productos">
+            <!-- Producto 1 -->
+            <div class="producto">
+                <img id="coca" src="https://www.hkexpress.mx/web/image/product.template/16/image" alt="Coca-Cola">
+                <button id="btnCOCA">Agregar al carrito</button>
+            </div>
+            <!-- Producto 2 -->
+            <div class="producto">
+                <img id="pera" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KcEkwcPZ2w_6ZhTwimPcAx9EC447jo44F-Ft9fozjw&s" alt="Pera">
+                <button id="btnPERA">Agregar al carrito</button>
+            </div>
+            <!-- Producto 3 -->
+            <div class="producto">
+                <img id="agua" src="https://chedrauimx.vtexassets.com/arquivos/ids/28878251-800-auto?v=638483737272400000&width=800&height=auto&aspect=true" alt="Agua">
+                <button id="btnAGUA">Agregar al carrito</button>
+            </div>
+            <!-- Producto 4 -->
+            <div class="producto">
+                <img id="pesaRusa" src="https://i.pinimg.com/736x/70/de/21/70de21ca73f76f9eeaf47ce6fd8ec239.jpg" alt="Pesa rusa">
+                <button id="btnPESA_RUSA">Agregar al carrito</button>
+            </div>
+        </section>
+
+        <button id="btn_verCarrito">Ver carrito</button>
+    </main>
+
+    <script>
+      /*
+      < --------------------------------- OBSERVACIÓN IMPORTANTE --------------------------------- >
+      CREO QUE AQUÍ SE PODRÍA PONER ALGUNA VALIDACIÓN DE QUE:
+      DEPENDIENDO DEL USUARIO QUE SE MUESTRE EN EL DOM, SE MOSTRARÁ EL LOCALSTORAGE DE ÉL, Y SI ES UNO QUE NUNCA HA INGRESADO A ESTE APARTADO,
+      EL LOCALSTORAGE MUESTRA UN ESPACIO EN MEMORIA RESERVADO PARA ÉL, Y ESE ESPACIO ESTARÍA VACÍO. ESTARÍA VACÍO HASTA QUE ÉL LO EMPIECE A USAR.
+
+      O sea, que en este mismo archivo creo que se debe hacer localStorage.setItem('carrito' + actualUser). O algo así se me ocurre.
+
+      */
+
+        const btnCOCA = document.getElementById('btnCOCA');
+        const btnPERA = document.getElementById('btnPERA');
+        const btnAGUA = document.getElementById('btnAGUA');
+        const btnPESA_RUSA = document.getElementById('btnPESA_RUSA');
+
+        const productos = {
+            coca: 'Coca-Cola',
+            pera: 'Pera',
+            agua: 'Agua',
+            pesaRusa: 'Pesa rusa'
+        };
+
+        // Array para almacenar los productos añadidos al carrito
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        // Agregar un producto al carrito
+        function agregarAlCarrito(producto) {
+            carrito.push(producto);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            console.log(`${producto} agregado al carrito`);
+            console.log(carrito);
+        }
+
+        // EVENTLISTENERS
+        btnCOCA.addEventListener('click', () => {
+          agregarAlCarrito(productos.coca);
+        });
+
+        btnPERA.addEventListener('click', () => {
+          agregarAlCarrito(productos.pera);
+        });
+
+        btnAGUA.addEventListener('click', () => {
+          agregarAlCarrito(productos.agua);
+        });
+
+        btnPESA_RUSA.addEventListener('click', () => {
+          agregarAlCarrito(productos.pesaRusa);
+        });
+
+        // Botón para ver el carrito
+        document.getElementById('btn_verCarrito').addEventListener('click', () => {
+          window.location.href = 'BigCart.html';
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos</title>
+</head>
+<body>
+</head>
+<body>
+    <header>
+        <h1>Tienda de Productos</h1>
+    </header>
+
+    
+    <section id="productos"> -->
+      <!-- Producto 1 -->
+      <!-- <div class="producto">
+        <img id="coca" src="https://www.hkexpress.mx/web/image/product.template/16/image" alt="" width="300px">
+        <button id="btnCOCA">Agregar al carrito</button>
+      </div> -->
+      
+      <!-- Producto 2 -->
+      <!-- <div class="producto">
+        <img id="pera" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KcEkwcPZ2w_6ZhTwimPcAx9EC447jo44F-Ft9fozjw&s" alt="" width="300px">
+        <button id="btnPERA">Agregar al carrito</button>
+      </div> -->
+
+      <!-- Producto 3 -->
+      <!-- <div class="producto">
+        <img id="agua" src="https://chedrauimx.vtexassets.com/arquivos/ids/28878251-800-auto?v=638483737272400000&width=800&height=auto&aspect=true" alt="" width="300px">
+        <button id="btnAGUA">Agregar al carrito</button>
+      </div> -->
+
+      <!-- Producto 4 -->
+      <!-- <div class="producto">
+        <img id="pesaRusa" src="https://i.pinimg.com/736x/70/de/21/70de21ca73f76f9eeaf47ce6fd8ec239.jpg" alt="" width="300px">
+        <button id="btnPESA_RUSA">Agregar al carrito</button>
+      </div>
+    </section>
+    
+    <br>
+    <br>
+    <button id="btn_verCarrito">Ver carrito</button>
+    
+
+ -->
+
+    <!-- <script> -->
+      <!-- //Variable para identificar al usuario en control/sesión
+      // let userID = 
+
+      //Botones para agregar al carrito
+      const btnCOCA = document.getElementById('btnCOCA');
+      const btnPERA = document.getElementById('btnPERA');
+      const btnAGUA = document.getElementById('btnAGUA');
+      const btnPESA_RUSA = document.getElementById('btnPESA_RUSA');
+
+      //Productos (IMAGENES)
+      const cocaIMG = document.getElementById('coca');
+      const peraIMG = document.getElementById('pera');
+      const aguaIMG = document.getElementById('agua');
+      const pesaRusaIMG = document.getElementById('pesaRusa');
+
+      //Productos (strings)
+      const coca = 'Coca-Cola';
+      const pera = 'Pear';
+      const agua = 'Water';
+      const pesaRusa = 'Kettlebell';
+
+      //Botón para entrar al carrito
+      const btn_verCarrito = document.getElementById('btn_verCarrito');
+
+      let productsArr = [];
+
+      btnCOCA.addEventListener('click', () => {
+        //Agregar producto al array.
+        productsArr.push(coca);
+        console.log('Coca-Cola added to cart');
+      });
+
+      btnPERA.addEventListener('click', () => {
+        //Agregar producto al array.
+        productsArr.push(pera);
+        console.log('Pear added to cart');
+      });
+
+      btnAGUA.addEventListener('click', () => {
+        //Agregar producto al array.
+        productsArr.push(agua);
+        console.log('Water added to cart');
+      });
+
+      btnPESA_RUSA.addEventListener('click', () => {
+        //Agregar producto al array.
+        productsArr.push(pesaRusa);
+        console.log('Kettlebell added to cart');
+
+        console.log(productsArr);
+      });
+
+
+      //Ver carrito
+      btn_verCarrito.addEventListener('click', () => {
+        const data = {
+          products: productsArr
+        };
+
+        //NO ESTOY SEGURO DE LA URL DE ESTE FETCH
+        fetch("http://127.0.0.1:3000/BigCart", {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer "
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.httpStatus === 200) {
+            window.location.href = '/BigCart.html'
+          } else {
+            alert("Algo salió mal al cargar el carrito");
+          }
+        })
+        .catch(error => {
+          console.error('Error: ', error);
+        });
+      }); -->
+
+    <!-- </script>
+</body>
+</html> -->

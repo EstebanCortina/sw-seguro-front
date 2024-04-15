@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigCart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Estilo para el cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilo para el contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para el título */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Estilo para la tabla del carrito */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px sólido #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #ffffff;
+        }
+
+        /* Estilo para las celdas de la tabla */
+        td {
+            background-color: #f9f9f9;
+        }
+
+        /* Estilo para las filas */
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        /* Estilo para el botón de vaciar carrito */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #004289;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Productos en el carrito</h1>
+        <table id="carrito-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody id="carrito-body">
+                <!-- Los productos se añaden aquí -->
+            </tbody>
+        </table>
+
+        <button class="button" id="empty-carrito">Vaciar carrito</button>
+    </div>
+
+    <script>
+        function loadCarrito() {
+            // Recuperar los datos del carrito del localStorage
+            const carritoData = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Crear un objeto para agrupar los productos por nombre y contar cantidades
+            const productosAgrupados = carritoData.reduce((acc, producto) => {
+                if (acc[producto]) {
+                    acc[producto]++;
+                } else {
+                    acc[producto] = 1;
+                }
+                return acc;
+            }, {});
+
+            // Tabla del carrito
+            const carritoBody = document.getElementById('carrito-body');
+
+            // Limpiar la tabla antes de añadir datos nuevos
+            carritoBody.innerHTML = '';
+
+            // Validar si hay datos en el carrito
+            if (Object.keys(productosAgrupados).length > 0) {
+                // Recorrer los productos agrupados y agregarlos a la tabla
+                Object.entries(productosAgrupados).forEach(([producto, cantidad]) => {
+                    const row = document.createElement('tr');
+                    const cellProducto = document.createElement('td');
+                    cellProducto.textContent = producto;
+                    const cellCantidad = document.createElement('td');
+                    cellCantidad.textContent = cantidad;
+                    row.appendChild(cellProducto);
+                    row.appendChild(cellCantidad);
+                    carritoBody.appendChild(row);
+                });
+            } else {
+                // Si el carrito está vacío, mostrar mensaje de que está vacío.
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 2; // Para cubrir ambas columnas
+                cell.textContent = 'El carrito está vacío';
+                row.appendChild(cell);
+                carritoBody.appendChild(row);
+            }
+        }
+
+        // Vaciar el carrito
+        function emptyCarrito() {
+            localStorage.removeItem('carrito');
+            loadCarrito();
+        }
+
+        // Cada que se cargue la página se obtienen los datos
+        window.addEventListener('DOMContentLoaded', loadCarrito);
+
+        // Evento para vaciar el carrito
+        document.getElementById('empty-carrito').addEventListener('click', emptyCarrito);
+    </script>
+</body>
+
+</html>
