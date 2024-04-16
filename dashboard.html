@@ -173,7 +173,7 @@
       // <button onClick=logout()>Logout</button>
       // `;
       let usuarios = get_users().then((res) => {
-        agregarFilasTabla(res);
+        agregarFilasTabla(res); //me da asco esta linea de codigo pero no hay tiempo jksjjaj
       });
 
       function get_users() {
@@ -187,12 +187,11 @@
               withCredentials: true,
             })
             .then((data) => {
-              console.log(data)
               if (data.httpStatus === 403) {
-                
+                window.location.href = "./home.html"
               } else {
-                console.log(data)
-                return resolve(data.data);
+                console.log(data.data)
+                return resolve(data.data.data);
               }
             })
             .catch((error) => {
