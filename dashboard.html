@@ -194,28 +194,28 @@
       }
 
       // Al cargar la página, cargar ek estado del usuario
-      window.onload = function () {
-        let current_user = sessionStorage.getItem("session")
-          ? JSON.parse(sessionStorage.getItem("session"))
-          : null;
-        if (!current_user) {
-          window.location.href = "/index.html";
-        } else {
-          let personal_info = document.getElementById("personal-info");
-          personal_info.innerHTML = `
-      <h2>Información Personal</h2>
-      <p><strong>Nombre:</strong> ${current_user.name}</p>
-      <p><strong>Email:</strong> ${current_user.email}</p>
-      <p><strong>Tipo de Usuario:</strong> ${current_user.user_type_name}</p>
-      <button onClick="logout()">Logout</button>
-    `;
+    //   window.onload = function () {
+    //     let current_user = sessionStorage.getItem("session")
+    //       ? JSON.parse(sessionStorage.getItem("session"))
+    //       : null;
+    //     if (!current_user) {
+    //       window.location.href = "/index.html";
+    //     } else {
+    //       let personal_info = document.getElementById("personal-info");
+    //       personal_info.innerHTML = `
+    //   <h2>Información Personal</h2>
+    //   <p><strong>Nombre:</strong> ${current_user.name}</p>
+    //   <p><strong>Email:</strong> ${current_user.email}</p>
+    //   <p><strong>Tipo de Usuario:</strong> ${current_user.user_type_name}</p>
+    //   <button onClick="logout()">Logout</button>
+    // `;
 
-          //Obetener estados de usuarios y el estado
-          get_users(current_user.id).then((res) => {
-            actualizarBotones(res);
-          });
-        }
-      };
+    //       //Obetener estados de usuarios y el estado
+    //       get_users(current_user.id).then((res) => {
+    //         actualizarBotones(res);
+    //       });
+    //     }
+    //   };
 
       // Función para actualizar visualmente los botones según el estado del usuario
       function actualizarBotones(usuarios) {
