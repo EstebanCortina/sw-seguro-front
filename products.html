@@ -185,7 +185,9 @@
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price}MXN</h4>
-                    <button onClick="agregarAlCarrito(${producto})">Añadir ${producto.name} al carrito</button>
+                    <button onClick="agregarAlCarrito(${JSON.stringify(
+                      producto
+                    )})">Añadir ${producto.name} al carrito</button>
                     </div>`;
           productoDiv.className = "producto";
 
@@ -196,9 +198,8 @@
       // Agregar producto al carrito
       function agregarAlCarrito(producto) {
         const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-        carrito.push(producto);
+        carrito.push(JSON.parse(producto));
         localStorage.setItem("carrito", JSON.stringify(carrito));
-        console.log(`${producto.name} agregado al carrito`);
       }
 
       // Inicialización
