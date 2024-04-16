@@ -191,7 +191,7 @@
                     </div>`;
           productoDiv.className = "producto";
 
-          document.querySelector('.agregar-carrito').forEach(boton=>{
+          document.querySelectorAll('.agregar-carrito').forEach(boton=>{
             boton.addEventListener('click', ()=>{
               const productoJSON = this.getAttribute('data-producto');
               const producto = JSON.parse(productoJSON);
