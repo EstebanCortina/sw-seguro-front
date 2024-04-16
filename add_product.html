@@ -1,0 +1,120 @@
+add_product.html
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <style>
+        /* Estilos para el formulario de agregar producto */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #0f6622;
+        }
+        
+        #btn_volver {
+            background-color: #007bff;
+        }
+        
+        #btn_volver:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Agregar Producto</h1>
+    <form id="addProductForm">
+        <label for="nombre">Nombre del Producto:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" required>
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" required>
+
+        <label for="imagen">URL de la Imagen:</label>
+        <input type="text" id="imagen" name="imagen" required>
+
+        <button type="submit">Agregar Producto</button>
+        <button id="btn_volver">Volver a productos</button>
+    </form>
+
+    <script>
+        // Función para manejar el formulario
+        document.getElementById('addProductForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Obtener los valores de los campos del formulario
+            const nombre = document.getElementById('nombre').value;
+            const precio = parseFloat(document.getElementById('precio').value);
+            const stock = parseInt(document.getElementById('stock').value, 10);
+            const imagen = document.getElementById('imagen').value;
+
+            // Botón volver
+            const btn_volver = document.getElementById('btn_volver');
+
+            // Crear un objeto para el nuevo producto
+            const nuevoProducto = {
+                nombre,
+                precio,
+                stock,
+                imagen
+            };
+
+            // Recuperar la lista de productos existente
+            const productos = JSON.parse(localStorage.getItem('productos')) || [];
+
+            // Añadir el nuevo producto a la lista
+            productos.push(nuevoProducto);
+
+            // Guardar la lista actualizada en localStorage
+            localStorage.setItem('productos', JSON.stringify(productos));
+
+            // Redirigir a la página de productos
+            window.location.href = 'products.html';
+        });
+
+        // Función para volver a la página de productos
+        btn_volver.addEventListener('click', () => {
+          window.location.href = 'products.html';
+        });
+    </script>
+</body>
+
+</html>
