@@ -124,35 +124,35 @@
 
     let productoDiv = document.getElementById('productos');
 
-    // Aquí se obtienen los productos del back
-    // axios
-    //     .get(`${api_url}/products`, {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`,
-    //         },
-    //         withCredentials: true,
-    //     })
-    //     .then((response) => {
-    //         if (response.data.httpStatus === 200) {
-    //             productos_procedentes = response.data.data;
-    //             console.log(response.data.data)
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error: ', response);
-    //     });
+
+    axios
+        .get(`${api_url}/products`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            withCredentials: true,
+        })
+        .then((response) => {
+            if (response.data.httpStatus === 200) {
+                productos_procedentes = response.data.data;
+                console.log(response.data.data)
+            }
+        })
+        .catch((error) => {
+            console.error('Error: ', response);
+        });
 
 
         // Establece los productos predeterminados en localStorage si no existen
         function establecerProductosPorDefecto() {
-            const productosPorDefecto = [{
-                "id": '0482ce95-fb75-11ee-9009-127b183de277',
-                "name": "play 5",
-                "price": 8000,
-                "img_url": "https://www.cnet.com/a/img/resize/673c0859dd0d8520d26e7515306c397b7e2beff6/hub/2016/06/14/a3d57ede-410b-4681-8fd9-1a9638e6385e/xbox-one-s.jpg?auto=webp&width=1200",
-                "stock": 10
-            }];
+            // const productosPorDefecto = [{
+            //     "id": '0482ce95-fb75-11ee-9009-127b183de277',
+            //     "name": "play 5",
+            //     "price": 8000,
+            //     "img_url": "https://www.cnet.com/a/img/resize/673c0859dd0d8520d26e7515306c397b7e2beff6/hub/2016/06/14/a3d57ede-410b-4681-8fd9-1a9638e6385e/xbox-one-s.jpg?auto=webp&width=1200",
+            //     "stock": 10
+            // }];
 
 
 
@@ -185,7 +185,7 @@
 
             if (!localStorage.getItem('productos')) {
               //Guarda productos predeterminados en localstorage
-              localStorage.setItem('productos', JSON.stringify(productosPorDefecto));
+              localStorage.setItem('productos', JSON.stringify(productos_procedentes));
               //Envia los productos por defecto en existencia al back de ESTEBAN
             //   enviarProductosABaseDeDatos(productosPorDefecto);
             }
