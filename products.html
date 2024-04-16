@@ -185,26 +185,11 @@
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price}MXN</h4>
-                    <button id="añadirCarrito">Añadir ${producto.name} al carrito</button>
+                    <button onClick="agregarAlCarrito(producto)">Añadir ${producto.name} al carrito</button>
                     </div>`;
           productoDiv.className = "producto";
-          // productoName.className = 'productoName';
-
-          //Crear elementos de imagen y botón
-          // const img = document.createElement("img");
-          // img.src = producto.img_url;
-          // img.alt = producto.name;
 
           const btn_addCart = document.getElementById("añadirCarrito");
-          // button.textContent = `Agregar ${producto.name} al carrito`;
-          btn_addCart.addEventListener("click", () => {
-            agregarAlCarrito(producto);
-          });
-
-          // Agregar elementos al contenedor de producto
-          //productoDiv.appendChild(img);
-          //productoDiv.appendChild(btn_addCart);
-          //productosContainer.appendChild(productoDiv);
         });
       }
 
