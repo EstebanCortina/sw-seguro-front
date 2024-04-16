@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -85,57 +86,57 @@
       </div>
     </div>
     <script>
+      let api_url = "https://sw-seguro-back-productos.onrender.com";
+      let token = null;
+
       function hashPassword(password) {
         // Crear un nuevo objeto CryptoJS con el hash SHA-256
         var hashedPassword = CryptoJS.SHA256(password);
         // Convertir el hash en una cadena hexadecimal
         return hashedPassword.toString(CryptoJS.enc.Hex);
       }
-      let token = null;
+
       google.accounts.id.initialize({
         client_id:
           "7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com",
         callback: (resp) => {
           console.log(resp.credential);
           login(resp.credential, email.value, pass.value);
-        }, //Descomentar para obtener token
+        },
       });
+
       google.accounts.id.renderButton(document.getElementById("google-btn"), {
         theme: "filled_blue",
         size: "large",
         shape: "rectangle",
         width: 350,
       });
+
       const google_container = document.getElementById("google-container");
       const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
+
       function login(token, email, pass) {
-        //primero google
-        let url = "http:127.0.0.1:3000/sign-in";
         const data = {
           email: email,
-          pass: pass,
+          pass: hashPassword(pass),
         };
 
-        fetch("http://127.0.0.1:3000/sign-in", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-          credentials: "include",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.httpStatus === 200) {
-              data.token = token;
+        axios
+          .post(`${api_url}/sign-in`, data, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          })
+          .then((response) => {
+            if (response.data.httpStatus === 200) {
               window.location.href = "/dashboard.html";
-              sessionStorage.setItem("session", JSON.stringify(data.data));
-            } else {
-              alert("Revise su credenciales o cree una nueva cuenta");
             }
+            console.log(response.data);
+            alert("Revisa tus credenciales");
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -143,7 +144,7 @@
       }
 
       sign_in_button.addEventListener("click", () => {
-        //login(email, pass);
+        //login(email.value, pass.value);
         email.disabled = true;
         pass.disabled = true;
         google_container.display = "block";
