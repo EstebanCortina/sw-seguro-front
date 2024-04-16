@@ -24,5 +24,13 @@
       <p><strong>Email:</strong> usuario@example.com</p>
       <p><strong>Tipo de Usuario:</strong> Alumno</p>
     </div>
+    <script>
+      let token = sessionStorage.getItem("gToken")
+      if (!token){
+        window.location.href = "./index.html"
+      }
+      let info = sessionStorage.getItem("info")
+      console.log(info)
+    </script>
   </body>
 </html>
