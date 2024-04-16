@@ -139,7 +139,7 @@
               "Content-Type": "application/json",
               "Authorization": `Bearer ${token}`,
             },
-            //withCredentials: true,
+            withCredentials: true,
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
