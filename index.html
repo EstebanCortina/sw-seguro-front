@@ -143,6 +143,9 @@
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
+              console.log(response.data.data)
+              let {email, name, user_type_name} = response.data.data;
+              sessionStorage.setItem("info", {"name": name, "email": email, "user_type": user_type_name})
               sessionStorage.setItem("gToken", token)
               window.location.href = "/dashboard.html";
             }

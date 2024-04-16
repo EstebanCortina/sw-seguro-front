@@ -149,12 +149,7 @@
           </tbody>
         </table>
       </div>
-      <div id="personal-info" class="sidebar">
-        <h2>Información Personal</h2>
-        <p><strong>Nombre:</strong> Usuario Ejemplo</p>
-        <p><strong>Email:</strong> usuario@example.com</p>
-        <p><strong>Tipo de Usuario:</strong> Alumno</p>
-      </div>
+      
     </div>
     <button onclick="logout()">logout</button>
     <script>
@@ -187,7 +182,7 @@
               withCredentials: true,
             })
             .then((data) => {
-              if (data.httpStatus === 403) {
+              if (data.data.httpStatus === 403) {
                 window.location.href = "./home.html"
               } else {
                 console.log(data.data)
@@ -315,7 +310,7 @@
         withCredentials: true
       })
         .then((response) => {
-          console.log(response.response)
+          sessionStorage.removeItem("gToken")
           window.location.href = "./index.html"
         })
 		}
