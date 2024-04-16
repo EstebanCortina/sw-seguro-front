@@ -64,6 +64,20 @@
         button:hover {
             background-color: #c82333;
         }
+
+        #enviarDatos {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #enviarDatos:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
@@ -76,6 +90,8 @@
         <section id="carrito">
             <!-- Los productos en el carrito se cargarán aquí dinámicamente -->
         </section>
+        <!-- Botón para enviar los datos del carrito al backend -->
+        <button id="enviarDatos">Comprar</button>
     </main>
 
     <script>
@@ -151,8 +167,42 @@
             cargarCarrito();
         }
 
+        // Función para enviar los datos del carrito al backend
+        async function enviarDatosAlBackend() {
+            try {
+                // Obtener los datos del carrito
+                const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+                // Enviar una solicitud POST al backend
+                const respuesta = await fetch('url_de_ESTEBAN', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(carrito)
+                });
+
+                // Verificar la respuesta del servidor
+                if (respuesta.ok) {
+                    alert('Los datos se enviaron correctamente al backend.');
+                    // Puedes limpiar el carrito de localStorage si lo deseas
+                    localStorage.removeItem('carrito');
+                    // Actualizar el contenido del carrito
+                    cargarCarrito();
+                } else {
+                    alert('Hubo un error al enviar los datos.');
+                }
+            } catch (error) {
+                alert('Hubo un error al enviar los datos.');
+                console.error(error);
+            }
+        }
+
         // Inicialización
         window.addEventListener('DOMContentLoaded', cargarCarrito);
+
+        // Agregar evento de clic al botón de enviar datos
+        document.getElementById('enviarDatos').addEventListener('click', enviarDatosAlBackend);
     </script>
 </body>
 
