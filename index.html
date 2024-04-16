@@ -84,6 +84,7 @@
     google.accounts.id.initialize({
       client_id: '7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com',
       callback: (resp) => {
+        console.log(resp.credential)
         login(resp.credential, email.value, pass.value)
       } //Descomentar para obtener token
     });
