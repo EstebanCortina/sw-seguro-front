@@ -185,20 +185,29 @@
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price}MXN</h4>
-                    <button onClick="agregarAlCarrito('${JSON.stringify(producto).replace(/'/g, "\\'")}')">
+                    <button class="agregar-carrito" data-producto='${JSON.stringify(producto)}'>
                         Añadir ${producto.name} al carrito
-                    </button>`;
+                    </button>
+                    </div>`;
           productoDiv.className = "producto";
 
-          const btn_addCart = document.getElementById("añadirCarrito");
+          document.querySelector('.agregar-carrito').forEach(boton=>{
+            boton.addEventListener('click', ()=>{
+              const productoJSON = this.getAttribute('data-producto');
+              const producto = JSON.parse(productoJSON);
+              // Aquí puedes utilizar el objeto producto normalmente
+              agregarAlCarrito(producto)
+            })
+          })
         });
       }
 
       // Agregar producto al carrito
       function agregarAlCarrito(producto) {
         const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-        carrito.push(JSON.parse(producto));
+        carrito.push(producto);
         localStorage.setItem("carrito", JSON.stringify(carrito));
+        console.log(`${producto.name} agregado al carrito`);
       }
 
       // Inicialización
