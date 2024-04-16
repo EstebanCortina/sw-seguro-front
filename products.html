@@ -185,7 +185,7 @@
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price}MXN</h4>
-                    <button onClick="agregarAlCarrito(producto)">Añadir ${producto.name} al carrito</button>
+                    <button onClick="agregarAlCarrito(${producto})">Añadir ${producto.name} al carrito</button>
                     </div>`;
           productoDiv.className = "producto";
 
