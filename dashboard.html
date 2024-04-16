@@ -311,6 +311,7 @@
       })
         .then((response) => {
           sessionStorage.removeItem("gToken")
+          sessionStorage.removeItem("info")
           window.location.href = "./index.html"
         })
 		}
