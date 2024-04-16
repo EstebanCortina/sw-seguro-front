@@ -26,12 +26,13 @@
     </div>
     <script>
       let token = sessionStorage.getItem("gToken")
-      console.log(token)
       if (!token){
+        // SI NO TIENE TOKEN SIGNIFICA QUE NO HA INICIADO SESION Y LO MANDA AL LOGIN
         window.location.href = "./index.html"
       }
-      let info = JSON.parse(sessionStorage.getItem("info"))
+
       //AQUI ESTA LA INFO DEL USUARIO ACTUAL
+      let info = JSON.parse(sessionStorage.getItem("info"))
       console.log(info)
     </script>
   </body>
