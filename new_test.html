@@ -6,34 +6,49 @@
     <title>Document</title>
   </head>
   <body>
+		<button onclick="login()">login</button>
+		<button onclick="users()">users</button>
+		<button onclick="logout()">logout</button>
     <script>
       let api_url = "https://sw-seguro-back-productos.onrender.com";
-      let token =
-        "eyJhbGciOiJSUzI1NiIsImtpZCI6IjkzYjQ5NTE2MmFmMGM4N2NjN2E1MTY4NjI5NDA5NzA0MGRhZjNiNDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3MjkxNTAzNzMzLWExdGFrNTRuY3Vib3JkODBjYmQ4NGkxdDN2Y2M5YXJnLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzI5MTUwMzczMy1hMXRhazU0bmN1Ym9yZDgwY2JkODRpMXQzdmNjOWFyZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNDkzOTk2ODMxNDczMjYyNzg5NSIsImhkIjoidWNvbC5teCIsImVtYWlsIjoiZWNvcnRpbmFAdWNvbC5teCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MTMyMjgzNTQsIm5hbWUiOiJDT1JUSU5BIFNBTkNIRVogRVNURUJBTiBTRUJBU1RJQU4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUt6OTVscTNuMWZsTmg1V2owMlhJNFplNVp3SVlpdjlXWjBWRC1kZE5Vak5NU1k2az1zOTYtYyIsImdpdmVuX25hbWUiOiJDT1JUSU5BIFNBTkNIRVoiLCJmYW1pbHlfbmFtZSI6IkVTVEVCQU4gU0VCQVNUSUFOIiwiaWF0IjoxNzEzMjI4NjU0LCJleHAiOjE3MTMyMzIyNTQsImp0aSI6Ijg4NzJlODI5OGY1ZWEzMTNhZDhjYTg0NTY0Mjc4MWIzODU3MTA4OTcifQ.ZsbmSefklW6lJ0_0mdknQQojW8FSRf_ImQ-vdTS_V8tBmqxohuEGHC9P5mNOukKpHcajqcNEUFQ1pVJxghhjLp-cI0NgWGqHmH9c3-reAicNlQxhmdgg6g2B_SpptMXcP1yVQW3jziitSvKRxNYzS3_Y1sIDLkpJ7tiKzO9tsaQ7yGrsDQmMHPYbb4lrTYT-UsgImSz7h8aDgij-zy31k6ZwmJ38inKVFDpyVf8wHhjQxLlva3EWL86OQT3jd_pEw7IT9RyxHxBPDXKhuEYlSqDQ6nvTr4tbU7l5wF309_crBNn_AhJTxMdIaAQit_UFdPqHmpVG19fyj25WNEGj-A";
+      let token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjkzYjQ5NTE2MmFmMGM4N2NjN2E1MTY4NjI5NDA5NzA0MGRhZjNiNDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3MjkxNTAzNzMzLWExdGFrNTRuY3Vib3JkODBjYmQ4NGkxdDN2Y2M5YXJnLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzI5MTUwMzczMy1hMXRhazU0bmN1Ym9yZDgwY2JkODRpMXQzdmNjOWFyZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNDkzOTk2ODMxNDczMjYyNzg5NSIsImhkIjoidWNvbC5teCIsImVtYWlsIjoiZWNvcnRpbmFAdWNvbC5teCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MTMyMzUyODksIm5hbWUiOiJDT1JUSU5BIFNBTkNIRVogRVNURUJBTiBTRUJBU1RJQU4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUt6OTVscTNuMWZsTmg1V2owMlhJNFplNVp3SVlpdjlXWjBWRC1kZE5Vak5NU1k2az1zOTYtYyIsImdpdmVuX25hbWUiOiJDT1JUSU5BIFNBTkNIRVoiLCJmYW1pbHlfbmFtZSI6IkVTVEVCQU4gU0VCQVNUSUFOIiwiaWF0IjoxNzEzMjM1NTg5LCJleHAiOjE3MTMyMzkxODksImp0aSI6IjE2N2IzMmExNWVjMWIxZGVjNTQ3MzBjZWIyZTNkMWE1OTI3NDU5ZDcifQ.wTPIObvjnJRz9r57k3WkW3vZQiKAp4BFsY_BWDCfLmM3d9r07KU8CSZeWMTxtXKFbyqaggzzNbdQzU8OWiWAlwmErCRJyhv0IkMqSao5kCtnU8gQ-Y2qrevSGvu40CVRutUrM6ObF-cyImoke4CPAhyO0Aha84_vosijO_XXcqxThmdCgLqQ_NtCpPbCHZHYSYox2ddw8X2B09IPDqFyZ-j177p5dudRv9tR8S0_oymaaHVgLNAY8zt_7ScCvOue44byQA0pXu0TFi4dTdMOEpoJdz5kdClJeNEuGsjKHT32b00W9dXq1v4d-Knsz5gV5jVFWrdj-f3PYljmTD3Jzw"
       let data = {
         email: "ecortina@ucol.mx",
         pass: "123",
       };
 
+		function login(){
       fetch(`${api_url}/sign-in`, {
         method: "POST",
+				//mode: "no-cors",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          "Authorization": "Bearer " + token,
         },
-      });
-
-      fetch(`${api_url}/users`, {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
-
+      }).then(response=>response.json()).then(data=>{
+				console.log(data)
+			});
+		}
+		function logout(){
       fetch(`${api_url}/logout`)
         .then((response) => response.json())
         .then((data) => console.log(data));
+		}
+
+		function users(){
+			fetch(`${api_url}/users`, {
+        method: "GET",
+        credentials: "include",
+				//mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+		}
     </script>
   </body>
 </html>
