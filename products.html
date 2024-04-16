@@ -190,8 +190,8 @@
           productoDiv.className = "producto";
           // productoName.className = 'productoName';
 
-          // Crear elementos de imagen y botón
-          // const img = document.createElement('img');
+          //Crear elementos de imagen y botón
+          // const img = document.createElement("img");
           // img.src = producto.img_url;
           // img.alt = producto.name;
 
@@ -202,9 +202,9 @@
           });
 
           // Agregar elementos al contenedor de producto
-          productoDiv.appendChild(img);
+          //productoDiv.appendChild(img);
           productoDiv.appendChild(btn_addCart);
-          productosContainer.appendChild(productoDiv);
+          //productosContainer.appendChild(productoDiv);
         });
       }
 
@@ -220,7 +220,7 @@
       window.addEventListener("DOMContentLoaded", async () => {
         try {
           let productos = await obtenerProductos();
-          console.log(productos);
+          console.log(productos.data.data);
           cargarProductos(productos.data.data);
         } catch (error) {
           console.log(error);
