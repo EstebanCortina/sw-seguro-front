@@ -26,13 +26,13 @@
     </div>
     <script>
       let token = sessionStorage.getItem("gToken")
+      console.log(token)
       if (!token){
         window.location.href = "./index.html"
       }
-      let info = sessionStorage.getItem("info")
-
+      let info = JSON.parse(sessionStorage.getItem("info"))
       //AQUI ESTA LA INFO DEL USUARIO ACTUAL
-      console.log(JSON.stringify(info))
+      console.log(info)
     </script>
   </body>
 </html>
