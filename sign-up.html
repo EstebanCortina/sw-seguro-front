@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign-up</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -92,6 +94,7 @@
     return hashedPassword.toString(CryptoJS.enc.Hex);
   }
   register.addEventListener('click', () => {
+    //USAR AXIOS Y CAMBIAR ESTO POR LA URL API
     fetch("http://127.0.0.1:3000/sign-up", {
       method: 'POST',
       body: JSON.stringify({
