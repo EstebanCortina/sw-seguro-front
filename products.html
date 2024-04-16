@@ -1,286 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda de Productos</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-        }
+      header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+      }
 
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+      main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
 
-        h1 {
-            margin: 0;
-        }
+      h1 {
+        margin: 0;
+      }
 
-        /* Estilos de la sección productos */
-        #productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
+      /* Estilos de la sección productos */
+      #productos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
 
-        .producto {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            text-align: center;
-        }
+      .producto {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+      }
 
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
 
-        /* Estilos de los botones */
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: auto;
-            width: 50%; /* Reducir el ancho del botón */
-            text-align: center; /* Alinear el texto del botón al centro */
-        }
+      /* Estilos de los botones */
+      button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: auto;
+        width: 50%; /* Reducir el ancho del botón */
+        text-align: center; /* Alinear el texto del botón al centro */
+      }
 
-        button:hover {
-            background-color: #0f6622;
-        }
+      button:hover {
+        background-color: #0f6622;
+      }
 
-        /* Botones adicionales */
-        #btn_verCarrito {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-            font-size: 16px;
-        }
+      /* Botones adicionales */
+      #btn_verCarrito {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+        font-size: 16px;
+      }
 
-        #btn_add_newProduct {
-            background-color: #ff6347;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-            font-size: 16px;
-        }
+      #btn_add_newProduct {
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+        font-size: 16px;
+      }
 
-        #btn_add_newProduct:hover {
-            background-color: #ff4500;
-        }
+      #btn_add_newProduct:hover {
+        background-color: #ff4500;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Tienda de Productos</h1>
+      <h1>Tienda de Productos</h1>
     </header>
 
     <main>
-        <section id="productos">
-            <!-- Los productos se cargarán aquí dinámicamente -->
-        </section>
+      <section id="productos">
+        <!-- Los productos se cargarán aquí dinámicamente -->
+      </section>
 
-        <button id="btn_verCarrito">Ver carrito</button>
-        <button id="btn_add_newProduct">Agregar nuevo producto</button>
+      <button id="btn_verCarrito">Ver carrito</button>
+      <button id="btn_add_newProduct">Agregar nuevo producto</button>
     </main>
 
     <script>
+      let api_url = "https://sw-seguro-back-productos.onrender.com";
+      let token = null;
 
-    let api_url = "https://sw-seguro-back-productos.onrender.com";
-    let token = null;
+      let productos_procedentes = null;
 
-    let productos_procedentes = null;
+      let productoDiv = document.getElementById("productos");
 
-    let productoDiv = document.getElementById('productos');
-
-
-    axios
-        .get(`${api_url}/products`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            withCredentials: true,
-        })
-        .then((response) => {
-            if (response.data.httpStatus === 200) {
-                productos_procedentes = response.data.data;
-                console.log(response.data.data)
-            }
-        })
-        .catch((error) => {
-            console.error('Error: ', response);
+      function obtenerProductos() {
+        return axios.get(`${api_url}/products`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
         });
+      }
+      // Establece los productos predeterminados en localStorage si no existen
+      function establecerProductosPorDefecto(productos) {
+        // const productosPorDefecto = [{
+        //     "id": '0482ce95-fb75-11ee-9009-127b183de277',
+        //     "name": "play 5",
+        //     "price": 8000,
+        //     "img_url": "https://www.cnet.com/a/img/resize/673c0859dd0d8520d26e7515306c397b7e2beff6/hub/2016/06/14/a3d57ede-410b-4681-8fd9-1a9638e6385e/xbox-one-s.jpg?auto=webp&width=1200",
+        //     "stock": 10
+        // }];
 
-
-        // Establece los productos predeterminados en localStorage si no existen
-        function establecerProductosPorDefecto() {
-            // const productosPorDefecto = [{
-            //     "id": '0482ce95-fb75-11ee-9009-127b183de277',
-            //     "name": "play 5",
-            //     "price": 8000,
-            //     "img_url": "https://www.cnet.com/a/img/resize/673c0859dd0d8520d26e7515306c397b7e2beff6/hub/2016/06/14/a3d57ede-410b-4681-8fd9-1a9638e6385e/xbox-one-s.jpg?auto=webp&width=1200",
-            //     "stock": 10
-            // }];
-
-
-
-            // const productosPorDefecto = [
-            //     {
-            //         nombre: 'Coca-Cola',
-            //         precio: 1.5,
-            //         stock: 1000,
-            //         imagen: 'https://www.hkexpress.mx/web/image/product.template/16/image'
-            //     },
-            //     {
-            //         nombre: 'Pera',
-            //         precio: 0.5,
-            //         stock: 1000,
-            //         imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KcEkwcPZ2w_6ZhTwimPcAx9EC447jo44F-Ft9fozjw&s'
-            //     },
-            //     {
-            //         nombre: 'Agua',
-            //         precio: 0.75,
-            //         stock: 1000,
-            //         imagen: 'https://chedrauimx.vtexassets.com/arquivos/ids/28878251-800-auto?v=638483737272400000&width=800&height=auto&aspect=true'
-            //     },
-            //     {
-            //         nombre: 'Pesa rusa',
-            //         precio: 20,
-            //         stock: 1000,
-            //         imagen: 'https://i.pinimg.com/736x/70/de/21/70de21ca73f76f9eeaf47ce6fd8ec239.jpg'
-            //     }
-            // ];
-
-            if (!localStorage.getItem('productos')) {
-              //Guarda productos predeterminados en localstorage
-              localStorage.setItem('productos', JSON.stringify(productos_procedentes));
-              //Envia los productos por defecto en existencia al back de ESTEBAN
-            //   enviarProductosABaseDeDatos(productosPorDefecto);
-            }
+        if (!localStorage.getItem("productos")) {
+          localStorage.setItem("productos", JSON.stringify(productos));
         }
+      }
 
-        
+      // Función para enviar productos a la base de datos
+      // async function enviarProductosABaseDeDatos(productos) {
+      //     const apiUrl = 'URL_DE_ESTEBAN';
 
+      //     try {
+      //         const response = await fetch(apiUrl, {
+      //             method: 'POST',
+      //             headers: {
+      //                 'Content-Type': 'application/json'
+      //             },
+      //             body: JSON.stringify(productos)
+      //         });
 
-        // Función para enviar productos a la base de datos
-        // async function enviarProductosABaseDeDatos(productos) {
-        //     const apiUrl = 'URL_DE_ESTEBAN';
+      //         if (response.ok) {
+      //             console.log('Productos enviados a la base de datos con éxito.');
+      //         } else {
+      //             console.error('Error al enviar los productos a la base de datos:', response.statusText);
+      //         }
+      //     } catch (error) {
+      //         console.error('Error de red:', error);
+      //     }
+      // }
 
-        //     try {
-        //         const response = await fetch(apiUrl, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify(productos)
-        //         });
+      // Cargar productos desde localStorage
+      function cargarProductos(productos) {
+        const productos = JSON.parse(localStorage.getItem("productos")) || [];
+        const productosContainer = document.getElementById("productos");
 
-        //         if (response.ok) {
-        //             console.log('Productos enviados a la base de datos con éxito.');
-        //         } else {
-        //             console.error('Error al enviar los productos a la base de datos:', response.statusText);
-        //         }
-        //     } catch (error) {
-        //         console.error('Error de red:', error);
-        //     }
-        // }
+        // Limpiar la sección de productos
+        productosContainer.innerHTML = "";
 
-        // Cargar productos desde localStorage
-        function cargarProductos() {
-            const productos = JSON.parse(localStorage.getItem('productos')) || [];
-            const productosContainer = document.getElementById('productos');
-
-            // Limpiar la sección de productos
-            productosContainer.innerHTML = '';
-
-            // Agregar cada producto a la sección de productos
-            productos.forEach(producto => {
-                // const productoDiv = document.createElement('div');
-                productoDiv.innerHTML += `<div>
+        // Agregar cada producto a la sección de productos
+        productos.forEach((producto) => {
+          // const productoDiv = document.createElement('div');
+          productoDiv.innerHTML += `<div>
                     <img src="${producto.img_url}"/>
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price}MXN</h4>
                     <button id="añadirCarrito">Añadir ${producto.name} al carrito</button>
                     </div>`;
-                productoDiv.className = 'producto';
-                // productoName.className = 'productoName';
+          productoDiv.className = "producto";
+          // productoName.className = 'productoName';
 
-                // Crear elementos de imagen y botón
-                // const img = document.createElement('img');
-                // img.src = producto.img_url;
-                // img.alt = producto.name;
+          // Crear elementos de imagen y botón
+          // const img = document.createElement('img');
+          // img.src = producto.img_url;
+          // img.alt = producto.name;
 
-                const btn_addCart = document.getElementById('añadirCarrito');
-                // button.textContent = `Agregar ${producto.name} al carrito`;
-                btn_addCart.addEventListener('click', () => {
-                    agregarAlCarrito(producto);
-                });
+          const btn_addCart = document.getElementById("añadirCarrito");
+          // button.textContent = `Agregar ${producto.name} al carrito`;
+          btn_addCart.addEventListener("click", () => {
+            agregarAlCarrito(producto);
+          });
 
-                // Agregar elementos al contenedor de producto
-                productoDiv.appendChild(img);
-                productoDiv.appendChild(btn_addCart);
-                productosContainer.appendChild(productoDiv);
-            });
+          // Agregar elementos al contenedor de producto
+          productoDiv.appendChild(img);
+          productoDiv.appendChild(btn_addCart);
+          productosContainer.appendChild(productoDiv);
+        });
+      }
+
+      // Agregar producto al carrito
+      function agregarAlCarrito(producto) {
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        carrito.push(producto);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        console.log(`${producto.name} agregado al carrito`);
+      }
+
+      // Inicialización
+      window.addEventListener("DOMContentLoaded", async () => {
+        try {
+          let productos = await obtenerProductos();
+          cargarProductos(productos);
+        } catch (error) {
+          console.log(error);
         }
+      });
 
-        // Agregar producto al carrito
-        function agregarAlCarrito(producto) {
-            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            carrito.push(producto);
-            localStorage.setItem('carrito', JSON.stringify(carrito));
-            console.log(`${producto.name} agregado al carrito`);
-        }
-
-        // Inicialización
-        window.addEventListener('DOMContentLoaded', () => {
-            establecerProductosPorDefecto(); // Configura los productos predeterminados
-            cargarProductos(); // Carga productos desde localStorage
+      // Botón para ver el carrito
+      document
+        .getElementById("btn_verCarrito")
+        .addEventListener("click", () => {
+          window.location.href = "BigCart.html";
         });
 
-        // Botón para ver el carrito
-        document.getElementById('btn_verCarrito').addEventListener('click', () => {
-            window.location.href = 'BigCart.html';
-        });
-
-        // Botón para redirigir a la página de agregar productos
-        document.getElementById('btn_add_newProduct').addEventListener('click', () => {
-            window.location.href = 'add_product.html';
+      // Botón para redirigir a la página de agregar productos
+      document
+        .getElementById("btn_add_newProduct")
+        .addEventListener("click", () => {
+          window.location.href = "add_product.html";
         });
     </script>
-</body>
-
+  </body>
 </html>
