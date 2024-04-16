@@ -95,6 +95,13 @@
     </main>
 
     <script>
+        let api_url = "https://sw-seguro-back-productos.onrender.com";
+        let token = null;
+
+        let productos_procedentes = null;
+
+
+
         // Cargar carrito desde localStorage
         function cargarCarrito() {
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -110,7 +117,7 @@
 
             // Contar la cantidad de veces que cada producto ha sido agregado al carrito
             carrito.forEach(producto => {
-                const claveProducto = `${producto.nombre}_${producto.precio}`;
+                const claveProducto = `${producto.name}_${producto.price}`;
                 if (conteoProductos[claveProducto]) {
                     conteoProductos[claveProducto].cantidad++;
                 } else {
@@ -125,13 +132,13 @@
 
                 // Crear elementos de imagen y detalles del producto
                 const img = document.createElement('img');
-                img.src = producto.imagen;
-                img.alt = producto.nombre;
+                img.src = producto.img_url;
+                img.alt = producto.name;
 
                 const detalles = document.createElement('div');
                 detalles.innerHTML = `
-                    <strong>${producto.nombre}</strong><br>
-                    Precio: $${producto.precio}<br>
+                    <strong>${producto.name}</strong><br>
+                    Precio: $${producto.price}<br>
                     Cantidad: ${producto.cantidad}
                 `;
 
@@ -157,7 +164,7 @@
 
             // Filtrar el carrito para eliminar el producto especificado
             carrito = carrito.filter(producto => {
-                return producto.nombre !== productoAEliminar.nombre || producto.precio !== productoAEliminar.precio || productoAEliminar.cantidad <= 0;
+                return producto.name !== productoAEliminar.name || producto.price !== productoAEliminar.price || productoAEliminar.cantidad <= 0;
             });
 
             // Actualizar localStorage con el carrito modificado
@@ -167,36 +174,57 @@
             cargarCarrito();
         }
 
+
+
+        // <--------------------------------------------------AQUÍ PONER EL AXIOS---------------------------------------------------------------->
+        // axios
+        // .get(`${api_url}/products`, {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": `Bearer ${token}`,
+        //     },
+        //     withCredentials: true,
+        // })
+        // .then((response) => {
+        //     if (response.data.httpStatus === 200) {
+        //         productos_procedentes = response.data.data;
+        //         console.log(response.data.data)
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.error('Error: ', response);
+        // });
+
         // Función para enviar los datos del carrito al backend
-        async function enviarDatosAlBackend() {
-            try {
-                // Obtener los datos del carrito
-                const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        // async function enviarDatosAlBackend() {
+        //     try {
+        //         // Obtener los datos del carrito
+        //         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-                // Enviar una solicitud POST al backend
-                const respuesta = await fetch('url_de_ESTEBAN', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(carrito)
-                });
+        //         // Enviar una solicitud POST al backend
+        //         const respuesta = await fetch('url_de_ESTEBAN', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(carrito)
+        //         });
 
-                // Verificar la respuesta del servidor
-                if (respuesta.ok) {
-                    alert('Los datos se enviaron correctamente al backend.');
-                    // Puedes limpiar el carrito de localStorage si lo deseas
-                    localStorage.removeItem('carrito');
-                    // Actualizar el contenido del carrito
-                    cargarCarrito();
-                } else {
-                    alert('Hubo un error al enviar los datos.');
-                }
-            } catch (error) {
-                alert('Hubo un error al enviar los datos.');
-                console.error(error);
-            }
-        }
+        //         // Verificar la respuesta del servidor
+        //         if (respuesta.ok) {
+        //             alert('Los datos se enviaron correctamente al backend.');
+        //             // Puedes limpiar el carrito de localStorage si lo deseas
+        //             localStorage.removeItem('carrito');
+        //             // Actualizar el contenido del carrito
+        //             cargarCarrito();
+        //         } else {
+        //             alert('Hubo un error al enviar los datos.');
+        //         }
+        //     } catch (error) {
+        //         alert('Hubo un error al enviar los datos.');
+        //         console.error(error);
+        //     }
+        // }
 
         // Inicialización
         window.addEventListener('DOMContentLoaded', cargarCarrito);

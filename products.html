@@ -83,7 +83,7 @@
             font-size: 16px;
         }
 
-        #btn_addProduct {
+        #btn_add_newProduct {
             background-color: #ff6347;
             color: white;
             border: none;
@@ -95,7 +95,7 @@
             font-size: 16px;
         }
 
-        #btn_addProduct:hover {
+        #btn_add_newProduct:hover {
             background-color: #ff4500;
         }
     </style>
@@ -112,69 +112,110 @@
         </section>
 
         <button id="btn_verCarrito">Ver carrito</button>
-        <button id="btn_addProduct">Agregar nuevo producto</button>
+        <button id="btn_add_newProduct">Agregar nuevo producto</button>
     </main>
 
     <script>
+
+    let api_url = "https://sw-seguro-back-productos.onrender.com";
+    let token = null;
+
+    let productos_procedentes = null;
+
+    let productoDiv = document.getElementById('productos');
+
+    // Aquí se obtienen los productos del back
+    // axios
+    //     .get(`${api_url}/products`, {
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Bearer ${token}`,
+    //         },
+    //         withCredentials: true,
+    //     })
+    //     .then((response) => {
+    //         if (response.data.httpStatus === 200) {
+    //             productos_procedentes = response.data.data;
+    //             console.log(response.data.data)
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error: ', response);
+    //     });
+
+
         // Establece los productos predeterminados en localStorage si no existen
         function establecerProductosPorDefecto() {
-            const productosPorDefecto = [
-                {
-                    nombre: 'Coca-Cola',
-                    precio: 1.5,
-                    stock: 1000,
-                    imagen: 'https://www.hkexpress.mx/web/image/product.template/16/image'
-                },
-                {
-                    nombre: 'Pera',
-                    precio: 0.5,
-                    stock: 1000,
-                    imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KcEkwcPZ2w_6ZhTwimPcAx9EC447jo44F-Ft9fozjw&s'
-                },
-                {
-                    nombre: 'Agua',
-                    precio: 0.75,
-                    stock: 1000,
-                    imagen: 'https://chedrauimx.vtexassets.com/arquivos/ids/28878251-800-auto?v=638483737272400000&width=800&height=auto&aspect=true'
-                },
-                {
-                    nombre: 'Pesa rusa',
-                    precio: 20,
-                    stock: 1000,
-                    imagen: 'https://i.pinimg.com/736x/70/de/21/70de21ca73f76f9eeaf47ce6fd8ec239.jpg'
-                }
-            ];
+            const productosPorDefecto = [{
+                "id": '0482ce95-fb75-11ee-9009-127b183de277',
+                "name": "play 5",
+                "price": 8000,
+                "img_url": "https://www.cnet.com/a/img/resize/673c0859dd0d8520d26e7515306c397b7e2beff6/hub/2016/06/14/a3d57ede-410b-4681-8fd9-1a9638e6385e/xbox-one-s.jpg?auto=webp&width=1200",
+                "stock": 10
+            }];
+
+
+
+            // const productosPorDefecto = [
+            //     {
+            //         nombre: 'Coca-Cola',
+            //         precio: 1.5,
+            //         stock: 1000,
+            //         imagen: 'https://www.hkexpress.mx/web/image/product.template/16/image'
+            //     },
+            //     {
+            //         nombre: 'Pera',
+            //         precio: 0.5,
+            //         stock: 1000,
+            //         imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-KcEkwcPZ2w_6ZhTwimPcAx9EC447jo44F-Ft9fozjw&s'
+            //     },
+            //     {
+            //         nombre: 'Agua',
+            //         precio: 0.75,
+            //         stock: 1000,
+            //         imagen: 'https://chedrauimx.vtexassets.com/arquivos/ids/28878251-800-auto?v=638483737272400000&width=800&height=auto&aspect=true'
+            //     },
+            //     {
+            //         nombre: 'Pesa rusa',
+            //         precio: 20,
+            //         stock: 1000,
+            //         imagen: 'https://i.pinimg.com/736x/70/de/21/70de21ca73f76f9eeaf47ce6fd8ec239.jpg'
+            //     }
+            // ];
 
             if (!localStorage.getItem('productos')) {
               //Guarda productos predeterminados en localstorage
               localStorage.setItem('productos', JSON.stringify(productosPorDefecto));
               //Envia los productos por defecto en existencia al back de ESTEBAN
-              enviarProductosABaseDeDatos(productosPorDefecto);
+            //   enviarProductosABaseDeDatos(productosPorDefecto);
             }
         }
+
+        
+
 
         // Función para enviar productos a la base de datos
-        async function enviarProductosABaseDeDatos(productos) {
-            const apiUrl = 'URL_DE_ESTEBAN';
+        // async function enviarProductosABaseDeDatos(productos) {
+        //     const apiUrl = 'URL_DE_ESTEBAN';
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(productos)
-                });
+        //     try {
+        //         const response = await fetch(apiUrl, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body: JSON.stringify(productos)
+        //         });
 
-                if (response.ok) {
-                    console.log('Productos enviados a la base de datos con éxito.');
-                } else {
-                    console.error('Error al enviar los productos a la base de datos:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error de red:', error);
-            }
-        }
+        //         if (response.ok) {
+        //             console.log('Productos enviados a la base de datos con éxito.');
+        //         } else {
+        //             console.error('Error al enviar los productos a la base de datos:', response.statusText);
+        //         }
+        //     } catch (error) {
+        //         console.error('Error de red:', error);
+        //     }
+        // }
 
         // Cargar productos desde localStorage
         function cargarProductos() {
@@ -186,23 +227,31 @@
 
             // Agregar cada producto a la sección de productos
             productos.forEach(producto => {
-                const productoDiv = document.createElement('div');
+                // const productoDiv = document.createElement('div');
+                productoDiv.innerHTML += `<div>
+                    <img src="${producto.img_url}"/>
+                    <h2>${producto.name}</h2>
+                    <h4>Stock: ${producto.stock}</h4>
+                    <h4>Precio: $${producto.price}MXN</h4>
+                    <button id="añadirCarrito">Añadir ${producto.name} al carrito</button>
+                    </div>`;
                 productoDiv.className = 'producto';
+                // productoName.className = 'productoName';
 
                 // Crear elementos de imagen y botón
-                const img = document.createElement('img');
-                img.src = producto.imagen;
-                img.alt = producto.nombre;
+                // const img = document.createElement('img');
+                // img.src = producto.img_url;
+                // img.alt = producto.name;
 
-                const button = document.createElement('button');
-                button.textContent = `Agregar ${producto.nombre} al carrito`;
-                button.addEventListener('click', () => {
+                const btn_addCart = document.getElementById('añadirCarrito');
+                // button.textContent = `Agregar ${producto.name} al carrito`;
+                btn_addCart.addEventListener('click', () => {
                     agregarAlCarrito(producto);
                 });
 
                 // Agregar elementos al contenedor de producto
                 productoDiv.appendChild(img);
-                productoDiv.appendChild(button);
+                productoDiv.appendChild(btn_addCart);
                 productosContainer.appendChild(productoDiv);
             });
         }
@@ -212,7 +261,7 @@
             const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
             carrito.push(producto);
             localStorage.setItem('carrito', JSON.stringify(carrito));
-            console.log(`${producto.nombre} agregado al carrito`);
+            console.log(`${producto.name} agregado al carrito`);
         }
 
         // Inicialización
@@ -227,7 +276,7 @@
         });
 
         // Botón para redirigir a la página de agregar productos
-        document.getElementById('btn_addProduct').addEventListener('click', () => {
+        document.getElementById('btn_add_newProduct').addEventListener('click', () => {
             window.location.href = 'add_product.html';
         });
     </script>
