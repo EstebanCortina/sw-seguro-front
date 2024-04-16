@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       body {
@@ -51,6 +52,12 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s;
+        align-items: center;
+        text-align: center;
+        align-content: center;
+      }
+      #loading {
+        margin: auto;
       }
 
       .login-container input[type="submit"]:hover {
@@ -84,6 +91,7 @@
         <button id="google-btn"></button>
         <a href="/sign-up.html" style="display: block">Sign-up</a>
       </div>
+      <img id="loading" src="./loading.svg" alt="cargando" style="display: none;"></img>
     </div>
     <script>
       let api_url = "https://sw-seguro-back-productos.onrender.com";
@@ -116,8 +124,10 @@
       const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
+      const loading = document.getElementById("loading");
 
       function login(token, email, pass) {
+        loading.style.display = "block";
         const data = {
           email: email,
           pass: hashPassword(pass),
@@ -127,24 +137,26 @@
           .post(`${api_url}/sign-in`, data, {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              "Authorization": `Bearer ${token}`,
             },
             withCredentials: true,
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
+              console.log(response.data.data)
+              let {email, name, user_type_name} = response.data.data;
+              sessionStorage.setItem("info", JSON.stringify({"name": name, "email": email, "user_type": user_type_name}))
+              sessionStorage.setItem("gToken", token)
               window.location.href = "/dashboard.html";
             }
-            console.log(response.data);
-            alert("Revisa tus credenciales");
           })
           .catch((error) => {
-            console.error("Error:", error);
+            console.log(error.response);
+            alert("Revisa tus credenciales");
           });
       }
 
       sign_in_button.addEventListener("click", () => {
-        //login(email.value, pass.value);
         email.disabled = true;
         pass.disabled = true;
         google_container.display = "block";
