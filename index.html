@@ -52,6 +52,13 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s;
+        align-items: center;
+        text-align: center;
+        align-content: center;
+      }
+      #loading {
+        display: block;
+        margin: auto;
       }
 
       .login-container input[type="submit"]:hover {
@@ -85,7 +92,7 @@
         <button id="google-btn"></button>
         <a href="/sign-up.html" style="display: block">Sign-up</a>
       </div>
-      <img id="loading" style="display: none;" src="./loading.svg" alt="cargando"></img>
+      <img id="loading" src="./loading.svg" alt="cargando"></img>
     </div>
     <script>
       let api_url = "https://sw-seguro-back-productos.onrender.com";
