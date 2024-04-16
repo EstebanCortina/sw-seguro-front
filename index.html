@@ -143,6 +143,7 @@
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
+              sessionStorage.setItem("gToken", token)
               window.location.href = "/dashboard.html";
             }
           })
