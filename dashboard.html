@@ -179,8 +179,9 @@
               withCredentials: true,
             })
             .then((data) => {
+              console.log(data)
               if (data.httpStatus === 403) {
-                window.location.href = "/home.html";
+                //window.location.href = "/home.html";
               } else {
                 console.log(data)
                 return resolve(data.data);
