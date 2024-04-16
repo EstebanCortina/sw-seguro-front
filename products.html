@@ -220,7 +220,8 @@
       window.addEventListener("DOMContentLoaded", async () => {
         try {
           let productos = await obtenerProductos();
-          cargarProductos(productos);
+          console.log(productos);
+          cargarProductos(productos.data.data);
         } catch (error) {
           console.log(error);
         }
