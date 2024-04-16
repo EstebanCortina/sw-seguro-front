@@ -85,6 +85,7 @@
         <button id="google-btn"></button>
         <a href="/sign-up.html" style="display: block">Sign-up</a>
       </div>
+      <img id="loading" style="display: none;" src="./loading.svg" alt="cargando"></img>
     </div>
     <script>
       let api_url = "https://sw-seguro-back-productos.onrender.com";
@@ -117,8 +118,10 @@
       const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
+      const loading = document.getElementById("loading");
 
       function login(token, email, pass) {
+        loading.style.display = "block";
         const data = {
           email: email,
           pass: hashPassword(pass),
