@@ -128,19 +128,18 @@
           .post(`${api_url}/sign-in`, data, {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              "Authorization": `Bearer ${token}`,
             },
-            withCredentials: true,
+            //withCredentials: true,
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
               window.location.href = "/dashboard.html";
             }
-            console.log(response.data);
-            alert("Revisa tus credenciales");
           })
           .catch((error) => {
-            console.error("Error:", error);
+            console.log(error.response);
+            alert("Revisa tus credenciales");
           });
       }
 
