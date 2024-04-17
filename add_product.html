@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         /* Estilos para el formulario de agregar producto */
         body {
@@ -69,52 +70,77 @@
         <label for="imagen">URL de la Imagen:</label>
         <input type="text" id="imagen" name="imagen" required>
 
-        <button type="submit">Agregar Producto</button>
+        <button id="addProduct">Agregar Producto</button>
         <button id="btn_volver">Volver a productos</button>
     </form>
 
     <script>
-        const form = document.getElementById('addProductForm');
+        // const form = document.getElementById('addProductForm');
+        const btn_agregarProd = document.getElementById('addProduct');
         const btn_volver = document.getElementById('btn_volver');
 
         // Función para manejar el formulario
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault();
+        btn_agregarProd.addEventListener('click', async function (event) {
+            // event.preventDefault();//Se supone que esto evita el envío tradicional del forms. No refresca la pag para que tu lo manejes como quieras.
 
             // Obtener los valores de los campos del formulario
             const nombre = document.getElementById('nombre').value;
             const precio = parseFloat(document.getElementById('precio').value);
-            const stock = parseInt(document.getElementById('stock').value, 10);
             const imagen = document.getElementById('imagen').value;
+            const stock = parseInt(document.getElementById('stock').value, 10);
 
+            let api_url = "https://sw-seguro-back-productos.onrender.com";
+            
             // Crear un objeto para el nuevo producto
             const nuevoProducto = {
-                nombre,
-                precio,
+                name,
+                price,
+                img_url,
                 stock,
-                imagen
             };
 
             try {
-                // Hacer una solicitud POST al back para agregar el nuevo producto
-                const response = await fetch('urlESTEBAN', {
-                    method: 'POST',
+                const response = await axios.post(`${api_url}/products`, nuevoProducto, {
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
                     },
-                    body: JSON.stringify(nuevoProducto)
+                    withCredentials: true,
                 });
 
-                if (response.ok) {
-                    // Si la solicitud es exitosa, redirigir a la página de productos
-                    window.location.href = 'products.html';
+                if (response.status === 201 || response.status === 200) {
+                    window.location.href = '/products.html';
                 } else {
-                    // Manejar el error si la solicitud falla
-                    console.error('Error al agregar el producto');
+                    console.error('Error al agregar producto: ', response.status);
                 }
             } catch (error) {
-                console.error('Error al enviar la solicitud al back-end:', error);
+                console.error('Error al enviar la solicitud al back-end: ', error);
             }
+            
+
+
+
+            //FETCH NO
+            // try {
+            //     // Hacer una solicitud POST al back para agregar el nuevo producto
+            //     const response = await fetch('urlESTEBAN', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify(nuevoProducto)
+            //     });
+
+            //     if (response.ok) {
+            //         // Si la solicitud es exitosa, redirigir a la página de productos
+            //         window.location.href = 'products.html';
+            //     } else {
+            //         // Manejar el error si la solicitud falla
+            //         console.error('Error al agregar el producto');
+            //     }
+            // } catch (error) {
+            //     console.error('Error al enviar la solicitud al back-end:', error);
+            // }
         });
 
         // Función para volver a la página de productos
