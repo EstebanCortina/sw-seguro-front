@@ -248,18 +248,6 @@
           }
         });
       }
-
-      // Función de cierre de sesión
-      function logout() {
-        sessionStorage.removeItem("gToken");
-        sessionStorage.removeItem("info");
-        window.location.href = "/";
-      }
-
-      // Redirigir a la tienda
-      function go_Store() {
-        window.location.href = "/products";
-      }
     </script>
   </body>
 </html>
