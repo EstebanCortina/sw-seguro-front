@@ -147,7 +147,7 @@
               let {email, name, user_type_name} = response.data.data;
               sessionStorage.setItem("info", JSON.stringify({"name": name, "email": email, "user_type": user_type_name}))
               sessionStorage.setItem("gToken", token)
-              window.location.href = "/dashboard.html";
+              window.location.href = "/home";
             }
           })
           .catch((error) => {

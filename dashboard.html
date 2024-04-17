@@ -32,49 +32,11 @@
       }
 
       /* Estilo de los botones */
-      .btn-container {
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        bottom: 10px; /* Ubicación de los botones */
-        left: 50%; /* Centra los botones horizontalmente */
-        transform: translateX(-50%);
-      }
 
-      .btn {
-        padding: 8px 16px;
-        margin: 0 10px;
-        border: none;
-        border-radius: 8px; /* Bordes redondeados */
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        font-weight: bold;
-        font-size: 1rem;
-      }
       .user-info {
         text-align: center;
       }
       /* Estilo para los botones */
-      .btn-danger {
-        background-color: #ff6347;
-        color: #fff;
-      }
-
-      .btn-danger:hover {
-        background-color: #ff4c30;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .btn-success {
-        background-color: #32cd32;
-        color: #fff;
-      }
-
-      .btn-success:hover {
-        background-color: #2cb82c;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-      }
 
       /* Estilo de la tabla de usuarios */
       table {
@@ -150,9 +112,9 @@
       let token = sessionStorage.getItem("gToken");
 
       // Si no tiene token, redirigir a la página de inicio de sesión
-      //   if (!token) {
-      //     window.location.href = "/";
-      //   }
+      if (!token) {
+        window.location.href = "/";
+      }
 
       // Cargar datos de los usuarios
       get_users().then((res) => {
@@ -172,7 +134,7 @@
             .then((data) => {
               // Si el usuario no tiene permiso suficiente, redirigir a index
               if (data.data.httpStatus === 403) {
-                window.location.href = "/";
+                window.location.href = "/home";
               } else {
                 resolve(data.data.data);
               }
