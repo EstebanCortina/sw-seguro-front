@@ -26,7 +26,7 @@
       /* Contenedor principal */
       .container {
         display: flex;
-        width: 1000px;
+        width: 560px;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       }
@@ -52,7 +52,9 @@
         font-weight: bold;
         font-size: 1rem;
       }
-
+      .user-info {
+        text-align: center;
+      }
       /* Estilo para los botones */
       .btn-danger {
         background-color: #ff6347;
@@ -148,9 +150,9 @@
       let token = sessionStorage.getItem("gToken");
 
       // Si no tiene token, redirigir a la página de inicio de sesión
-      if (!token) {
-        window.location.href = "/";
-      }
+      //   if (!token) {
+      //     window.location.href = "/";
+      //   }
 
       // Cargar datos de los usuarios
       get_users().then((res) => {
@@ -289,12 +291,12 @@
       function logout() {
         sessionStorage.removeItem("gToken");
         sessionStorage.removeItem("info");
-        window.location.href = "./index.html";
+        window.location.href = "/";
       }
 
       // Redirigir a la tienda
       function go_Store() {
-        window.location.href = "./products.html";
+        window.location.href = "/products";
       }
     </script>
   </body>
