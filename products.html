@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda de Productos</title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       /* Estilos generales */
       body {
@@ -159,7 +159,7 @@
         return axios.get(`${api_url}/products`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
           withCredentials: true,
         });
