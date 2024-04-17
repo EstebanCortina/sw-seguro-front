@@ -102,7 +102,7 @@
     }
     //USAR AXIOS Y CAMBIAR ESTO POR LA URL API
     axios
-      .post(`${api_url}/sign-up`, data, {
+      .post(`${api_url}/sign-up`, new_user, {
         headers: {
           "Content-Type": "application/json",
         }
