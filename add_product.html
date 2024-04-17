@@ -84,9 +84,9 @@
             // event.preventDefault();//Se supone que esto evita el envío tradicional del forms. No refresca la pag para que tu lo manejes como quieras.
 
             // Obtener los valores de los campos del formulario
-            const name = document.getElementById('nombre').value;
-            const price = parseFloat(document.getElementById('precio').value);
-            const img_url = document.getElementById('imagen').value;
+            const nombre = document.getElementById('nombre').value;
+            const precio = parseFloat(document.getElementById('precio').value);
+            const img = document.getElementById('imagen').value;
             const stock = parseInt(document.getElementById('stock').value, 10);
 
             let api_url = "https://sw-seguro-back-productos.onrender.com";
@@ -94,10 +94,10 @@
             
             // Crear un objeto para el nuevo producto
             const nuevoProducto = {
-                name,
-                price,
-                img_url,
-                stock,
+                name: nombre,
+                price: precio,
+                img_url: img,
+                stock: stock,
             };
 
             axios
@@ -110,15 +110,15 @@
             })
             .then((response) => {
                 if (response.data.httpStatus === 200) {
-                    console.log(response.data);
-                    window.location.href = "/products.html";
+                    console.log(response.data.data);
+                    // window.location.href = "/products.html";
                 } else {
                     console.error('Error: ', response.data.data.httpStatus);
                 }
             })
             .catch((error) => {
                 console.error("Error: ", error.response);
-                alert('Ocurrió un error al agregar el producto. Por favor, intenta nuevamente.');
+                // alert('Ocurrió un error al agregar el producto. Por favor, intenta nuevamente.');
             });
             
 
