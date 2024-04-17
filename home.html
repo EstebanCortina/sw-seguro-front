@@ -1,5 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f4f8;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #3a7d44;
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="personal-info" class="sidebar">
+        <h2>Información Personal</h2>
+        <p id="email"></p>
+        <p id="name"></p>
+        <p id="userType"></p>
+    </div>
+
+    <script>
+        let token = sessionStorage.getItem("gToken");
+        if (!token) {
+            window.location.href = "./index.html";
+        }
+
+        let info = JSON.parse(sessionStorage.getItem("info"));
+        console.log(info);
+
+        let emailText = document.getElementById('email');
+        let nameText = document.getElementById('name');
+        let userTypeText = document.getElementById('userType');
+
+        if (info) {
+            emailText.innerHTML = `<strong>Email:</strong> ${info.email}`;
+            nameText.innerHTML = `<strong>Nombre:</strong> ${info.name}`;
+            userTypeText.innerHTML = `<strong>Tipo de usuario:</strong> ${info.user_type}`;
+        } else {
+            console.error('No se pudo obtener la información del usuario.');
+        }
+    </script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,4 +129,4 @@
       }
     </script>
   </body>
-</html>
+</html> -->
