@@ -80,16 +80,17 @@
         const btn_volver = document.getElementById('btn_volver');
 
         // Función para manejar el formulario
-        btn_agregarProd.addEventListener('click', async function (event) {
+        btn_agregarProd.addEventListener('click', () => {
             // event.preventDefault();//Se supone que esto evita el envío tradicional del forms. No refresca la pag para que tu lo manejes como quieras.
 
             // Obtener los valores de los campos del formulario
-            const nombre = document.getElementById('nombre').value;
-            const precio = parseFloat(document.getElementById('precio').value);
-            const imagen = document.getElementById('imagen').value;
+            const name = document.getElementById('nombre').value;
+            const price = parseFloat(document.getElementById('precio').value);
+            const img_url = document.getElementById('imagen').value;
             const stock = parseInt(document.getElementById('stock').value, 10);
 
             let api_url = "https://sw-seguro-back-productos.onrender.com";
+            let token = sessionStorage.getItem("gToken");
             
             // Crear un objeto para el nuevo producto
             const nuevoProducto = {
@@ -99,23 +100,24 @@
                 stock,
             };
 
-            try {
-                const response = await axios.post(`${api_url}/products`, nuevoProducto, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                    withCredentials: true,
-                });
-
-                if (response.status === 201 || response.status === 200) {
-                    window.location.href = '/products.html';
-                } else {
-                    console.error('Error al agregar producto: ', response.status);
+            axios
+            .post(`${api_url}/products`, nuevoProducto, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                withCredentials: true,
+            })
+            .then((response) => {
+                if (response.data.httpStatus === 200) {
+                    console.log(response.data);
+                    window.location.href = "/products.html";
                 }
-            } catch (error) {
-                console.error('Error al enviar la solicitud al back-end: ', error);
-            }
+            })
+            .catch((error) => {
+                console.error("Error: ", error.response);
+                alert('Ocurrió un error al agregar el producto. Por favor, intenta nuevamente.');
+            });
             
 
 
