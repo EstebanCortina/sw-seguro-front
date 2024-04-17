@@ -112,6 +112,8 @@
                 if (response.data.httpStatus === 200) {
                     console.log(response.data);
                     window.location.href = "/products.html";
+                } else {
+                    console.error('Error: ', response.data.data.httpStatus);
                 }
             })
             .catch((error) => {
