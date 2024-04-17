@@ -1,247 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    />
     <style>
-        /* Estilos globales */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f4f8;
-        }
+      /* Estilos globales */
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f4f8;
+      }
 
-        /* Contenedor principal */
-        .container {
-            display: flex;
-            width: 1000px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
+      /* Contenedor principal */
+      .container {
+        display: flex;
+        width: 1000px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
 
-        /* Estilo de la barra lateral */
-        .sidebar {
-            width: 250px;
-            background-color: #3a7d44;
-            color: #fff;
-            border-radius: 10px 0 0 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
+      /* Estilo de los botones */
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 10px; /* Ubicación de los botones */
+        left: 50%; /* Centra los botones horizontalmente */
+        transform: translateX(-50%);
+      }
 
-        /* Estilo de la tabla de usuarios */
-        .user-info {
-            flex: 1;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 0 10px 10px 0;
-        }
+      .btn {
+        padding: 8px 16px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 8px; /* Bordes redondeados */
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+        font-size: 1rem;
+      }
 
-        /* Estilo de los botones */
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            position: absolute;
-            bottom: 10px; /* Ubicación de los botones */
-            left: 50%; /* Centra los botones horizontalmente */
-            transform: translateX(-50%);
-        }
+      /* Estilo para los botones */
+      .btn-danger {
+        background-color: #ff6347;
+        color: #fff;
+      }
 
-        .btn {
-            padding: 8px 16px;
-            margin: 0 10px;
-            border: none;
-            border-radius: 8px; /* Bordes redondeados */
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-weight: bold;
-            font-size: 1rem;
-        }
+      .btn-danger:hover {
+        background-color: #ff4c30;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        /* Estilo para los botones */
-        .btn-danger {
-            background-color: #ff6347;
-            color: #fff;
-        }
+      .btn-success {
+        background-color: #32cd32;
+        color: #fff;
+      }
 
-        .btn-danger:hover {
-            background-color: #ff4c30;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        }
+      .btn-success:hover {
+        background-color: #2cb82c;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+      }
 
-        .btn-success {
-            background-color: #32cd32;
-            color: #fff;
-        }
+      /* Estilo de la tabla de usuarios */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-        .btn-success:hover {
-            background-color: #2cb82c;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
 
-        /* Estilo de la tabla de usuarios */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+      th:last-child,
+      td:last-child {
+        text-align: center;
+      }
 
-        th,
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
+      th:first-child,
+      td:first-child {
+        width: 10%;
+      }
 
-        th:last-child,
-        td:last-child {
-            text-align: center;
-        }
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 20%;
+      }
 
-        th:first-child,
-        td:first-child {
-            width: 10%;
-        }
+      th:nth-child(3),
+      td:nth-child(3) {
+        min-width: 150px; /* Ancho mínimo para la columna "Email" */
+      }
 
-        th:nth-child(2),
-        td:nth-child(2) {
-            width: 20%;
-        }
+      th:nth-child(4),
+      td:nth-child(4) {
+        min-width: 120px; /* Ancho mínimo para la columna "Tipo de Usuario" */
+      }
 
-        th:nth-child(3),
-        td:nth-child(3) {
-            min-width: 150px; /* Ancho mínimo para la columna "Email" */
-        }
-
-        th:nth-child(4),
-        td:nth-child(4) {
-            min-width: 120px; /* Ancho mínimo para la columna "Tipo de Usuario" */
-        }
-
-        th:nth-child(5),
-        td:nth-child(5) {
-            min-width: 150px; /* Ancho mínimo para la columna "Acciones" */
-        }
+      th:nth-child(5),
+      td:nth-child(5) {
+        min-width: 150px; /* Ancho mínimo para la columna "Acciones" */
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <!-- Barra lateral -->
-        <div id="personal-info" class="sidebar">
-            <h2>Información Personal</h2>
-            <p id="email"></p>
-            <p id="name"></p>
-            <p id="userType"></p>
-            <div class="btn-container">
-                <button onclick="logout()" class="btn btn-danger">Logout</button>
-                <button onclick="go_Store()" class="btn btn-success">Tienda</button>
-            </div>
-        </div>
+      <!-- Barra lateral -->
 
-        <!-- Tabla de usuarios -->
-        <div class="user-info">
-            <h2>Dashboard - Tabla de Usuarios</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Tipo de Usuario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-usuarios">
-                    <!-- Aquí se agregan las filas de la tabla dinámicamente -->
-                </tbody>
-            </table>
-        </div>
+      <!-- Tabla de usuarios -->
+      <div class="user-info">
+        <h2>Dashboard - Tabla de Usuarios</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Tipo de Usuario</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-usuarios">
+            <!-- Aquí se agregan las filas de la tabla dinámicamente -->
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script>
-        let api_url = "https://sw-seguro-back-productos.onrender.com";
-        let token = sessionStorage.getItem("gToken");
+      let api_url = "https://sw-seguro-back-productos.onrender.com";
+      let token = sessionStorage.getItem("gToken");
 
-        // Si no tiene token, redirigir a la página de inicio de sesión
-        if (!token) {
-            window.location.href = "./index.html";
-        }
+      // Si no tiene token, redirigir a la página de inicio de sesión
+      if (!token) {
+        window.location.href = "./index.html";
+      }
 
-        // Cargar información del usuario
-        let info = JSON.parse(sessionStorage.getItem("info"));
+      // Cargar información del usuario
+      let info = JSON.parse(sessionStorage.getItem("info"));
 
-        let emailText = document.getElementById('email');
-        let nameText = document.getElementById('name');
-        let userTypeText = document.getElementById('userType');
+      let emailText = document.getElementById("email");
+      let nameText = document.getElementById("name");
+      let userTypeText = document.getElementById("userType");
 
-        if (info) {
-            emailText.innerHTML = `<strong>Email:</strong> ${info.email}`;
-            nameText.innerHTML = `<strong>Nombre:</strong> ${info.name}`;
-            userTypeText.innerHTML = `<strong>Tipo de usuario:</strong> ${info.user_type}`;
-        } else {
-            console.error('No se pudo obtener la información del usuario.');
-        }
+      if (info) {
+        emailText.innerHTML = `<strong>Email:</strong> ${info.email}`;
+        nameText.innerHTML = `<strong>Nombre:</strong> ${info.name}`;
+        userTypeText.innerHTML = `<strong>Tipo de usuario:</strong> ${info.user_type}`;
+      } else {
+        console.error("No se pudo obtener la información del usuario.");
+      }
 
-        // Cargar datos de los usuarios
-        get_users().then((res) => {
-            agregarFilasTabla(res);
-        });
+      // Cargar datos de los usuarios
+      get_users().then((res) => {
+        agregarFilasTabla(res);
+      });
 
-        function get_users() {
-            return new Promise((resolve, reject) => {
-                axios.get(`${api_url}/users`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + token,
-                    },
-                    withCredentials: true,
-                })
-                .then((data) => {
-                    // Si el usuario no tiene permiso suficiente, redirigir a index
-                    if (data.data.httpStatus === 403) {
-                        window.location.href = "./index.html";
-                    } else {
-                        resolve(data.data.data);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
+      function get_users() {
+        return new Promise((resolve, reject) => {
+          axios
+            .get(`${api_url}/users`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+              withCredentials: true,
+            })
+            .then((data) => {
+              // Si el usuario no tiene permiso suficiente, redirigir a index
+              if (data.data.httpStatus === 403) {
+                window.location.href = "./index.html";
+              } else {
+                resolve(data.data.data);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
             });
-        }
+        });
+      }
 
-        // Función para agregar filas a la tabla de usuarios
-        function agregarFilasTabla(datosUsuarios) {
-            const tablaUsuarios = document.getElementById("tabla-usuarios");
+      // Función para agregar filas a la tabla de usuarios
+      function agregarFilasTabla(datosUsuarios) {
+        const tablaUsuarios = document.getElementById("tabla-usuarios");
 
-            datosUsuarios.forEach((usuario) => {
-                const fila = document.createElement("tr");
+        datosUsuarios.forEach((usuario) => {
+          const fila = document.createElement("tr");
 
-                // Creamos los botones de activar y desactivar
-                let activarButton = `<button onclick="enable(${usuario.id})" class="btn btn-success">Activar</button>`;
-                let desactivarButton = `<button onclick="disable(${usuario.id})" class="btn btn-danger">Desactivar</button>`;
+          // Creamos los botones de activar y desactivar
+          let activarButton = `<button onclick="enable(${usuario.id})" class="btn btn-success">Activar</button>`;
+          let desactivarButton = `<button onclick="disable(${usuario.id})" class="btn btn-danger">Desactivar</button>`;
 
-                // Si el usuario está activado, mostramos el botón de desactivar y ocultamos el de activar
-                if (usuario.is_active) {
-                    activarButton = '';
-                } else {
-                    desactivarButton = '';
-                }
+          // Si el usuario está activado, mostramos el botón de desactivar y ocultamos el de activar
+          if (usuario.is_active) {
+            activarButton = "";
+          } else {
+            desactivarButton = "";
+          }
 
-                // Creamos la fila con la información del usuario
-                fila.innerHTML = `
+          // Creamos la fila con la información del usuario
+          fila.innerHTML = `
                     <td>${usuario.id}</td>
                     <td>${usuario.name}</td>
                     <td>${usuario.email}</td>
@@ -252,92 +226,91 @@
                     </td>
                 `;
 
-                tablaUsuarios.appendChild(fila);
-            });
-        }
+          tablaUsuarios.appendChild(fila);
+        });
+      }
 
-        // Funciones para desactivar y activar usuarios
-        function disable(id) {
-            fetch(`${api_url}/users/${id}/disable`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.httpStatus === 200) {
-                    alert("Usuario desactivado");
-                    actualizarBotones(id);
-                } else {
-                    console.error(data);
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-        }
+      // Funciones para desactivar y activar usuarios
+      function disable(id) {
+        fetch(`${api_url}/users/${id}/disable`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.httpStatus === 200) {
+              alert("Usuario desactivado");
+              actualizarBotones(id);
+            } else {
+              console.error(data);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
 
-        function enable(id) {
-            fetch(`${api_url}/users/${id}/enable`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.httpStatus === 200) {
-                    alert("Usuario activado");
-                    actualizarBotones(id);
-                } else {
-                    console.error(data);
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-        }
+      function enable(id) {
+        fetch(`${api_url}/users/${id}/enable`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.httpStatus === 200) {
+              alert("Usuario activado");
+              actualizarBotones(id);
+            } else {
+              console.error(data);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
 
-        // Función para actualizar los botones de activar y desactivar
-        function actualizarBotones(id) {
-            const filas = document.querySelectorAll("#tabla-usuarios tr");
+      // Función para actualizar los botones de activar y desactivar
+      function actualizarBotones(id) {
+        const filas = document.querySelectorAll("#tabla-usuarios tr");
 
-            filas.forEach((fila) => {
-                const filaId = fila.children[0].textContent;
+        filas.forEach((fila) => {
+          const filaId = fila.children[0].textContent;
 
-                if (parseInt(filaId) === id) {
-                    // Invertir la visibilidad de los botones
-                    const activarButton = fila.querySelector(".btn-success");
-                    const desactivarButton = fila.querySelector(".btn-danger");
+          if (parseInt(filaId) === id) {
+            // Invertir la visibilidad de los botones
+            const activarButton = fila.querySelector(".btn-success");
+            const desactivarButton = fila.querySelector(".btn-danger");
 
-                    if (activarButton && desactivarButton) {
-                        if (activarButton.style.display === "none") {
-                            activarButton.style.display = "inline-block";
-                            desactivarButton.style.display = "none";
-                        } else {
-                            activarButton.style.display = "none";
-                            desactivarButton.style.display = "inline-block";
-                        }
-                    }
-                }
-            });
-        }
+            if (activarButton && desactivarButton) {
+              if (activarButton.style.display === "none") {
+                activarButton.style.display = "inline-block";
+                desactivarButton.style.display = "none";
+              } else {
+                activarButton.style.display = "none";
+                desactivarButton.style.display = "inline-block";
+              }
+            }
+          }
+        });
+      }
 
-        // Función de cierre de sesión
-        function logout() {
-            sessionStorage.removeItem("gToken");
-            sessionStorage.removeItem("info");
-            window.location.href = "./index.html";
-        }
+      // Función de cierre de sesión
+      function logout() {
+        sessionStorage.removeItem("gToken");
+        sessionStorage.removeItem("info");
+        window.location.href = "./index.html";
+      }
 
-        // Redirigir a la tienda
-        function go_Store() {
-            window.location.href = "./products.html";
-        }
+      // Redirigir a la tienda
+      function go_Store() {
+        window.location.href = "./products.html";
+      }
     </script>
-</body>
-
+  </body>
 </html>
