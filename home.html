@@ -20,9 +20,9 @@
   <body>
     <div id="personal-info" class="sidebar">
       <h2>Información Personal</h2>
-      <p><strong>Nombre:</strong> Usuario Ejemplo</p>
-      <p><strong>Email:</strong> usuario@example.com</p>
-      <p><strong>Tipo de Usuario:</strong> Alumno</p>
+      <p id="email"></p>
+      <p id="name"></p>
+      <p id="userType"></p>
     </div>
     <script>
       let token = sessionStorage.getItem("gToken")
@@ -32,14 +32,19 @@
       }
 
       //AQUI ESTA LA INFO DEL USUARIO ACTUAL
+      // let info = "ola"; //INFO DE PRUEBA
       let info = JSON.parse(sessionStorage.getItem("info"))
       console.log(info)
 
+      let emailText = document.getElementById('email');
+      let nameText = document.getElementById('name');
+      let userTypeText = document.getElementById('userType');
+
       if (info) {
         // Actualiza los elementos en la barra lateral con la información del usuario
-        document.querySelector('#personal-info p:nth-of-type(1)').innerHTML = `<strong>Email:</strong> ${info.email}`;
-        document.querySelector('#personal-info p:nth-of-type(2)').innerHTML = `<strong>Nombre:</strong> ${info.name}`;
-        document.querySelector('#personal-info p:nth-of-type(3)').innerHTML = `<strong>Tipo de Usuario:</strong> ${info.user_type}`;
+        emailText.innerHTML = `<strong>Email: </strong>${info.email}`;
+        nameText.innerHTML = `<strong>Nombre: </strong>${info.name}`;
+        userTypeText.innerHTML = `<strong>Tipo de usuario: </strong>${info.user_type}`;
       } else {
           console.error('No se pudo obtener la información del usuario.');
       }
