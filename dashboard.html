@@ -149,22 +149,7 @@
 
       // Si no tiene token, redirigir a la página de inicio de sesión
       if (!token) {
-        window.location.href = "./index.html";
-      }
-
-      // Cargar información del usuario
-      let info = JSON.parse(sessionStorage.getItem("info"));
-
-      let emailText = document.getElementById("email");
-      let nameText = document.getElementById("name");
-      let userTypeText = document.getElementById("userType");
-
-      if (info) {
-        emailText.innerHTML = `<strong>Email:</strong> ${info.email}`;
-        nameText.innerHTML = `<strong>Nombre:</strong> ${info.name}`;
-        userTypeText.innerHTML = `<strong>Tipo de usuario:</strong> ${info.user_type}`;
-      } else {
-        console.error("No se pudo obtener la información del usuario.");
+        window.location.href = "/";
       }
 
       // Cargar datos de los usuarios
@@ -185,7 +170,7 @@
             .then((data) => {
               // Si el usuario no tiene permiso suficiente, redirigir a index
               if (data.data.httpStatus === 403) {
-                window.location.href = "./index.html";
+                window.location.href = "/";
               } else {
                 resolve(data.data.data);
               }
