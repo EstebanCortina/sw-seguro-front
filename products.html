@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda de Productos</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
     <style>
       /* Estilos generales */
       body {
@@ -116,6 +116,38 @@
     </main>
 
     <script>
+        //Cada que se cargue la página, hacer que el botón se veo o no se vea dependiendo de si es profe o alumno.
+        document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
+        
+        //FUNCION PARA SABER SI ES PROFE O ALUMNO
+        function ajustar_Visibilidad() {
+            const info = sessionStorage.getItem("info");
+
+            // json fake para probar
+            // let info = {
+            //     user_type: "alumno"
+            // };
+            
+            if (info) {
+                // const info = JSON.parse(info);
+
+                //Extarer tipo de usuario
+                const userType = info.user_type;
+
+                const botonAgregar = document.getElementById("btn_add_newProduct");
+
+                if (userType === "profesor") {
+                    botonAgregar.style.display = "block";
+                } else if (userType === "alumno") {
+                    botonAgregar.style.display = "none";
+                }
+            } else {
+                //Error inesperado. Devolver al usuario al index para que obtenga su sessionStorage.
+                console.error('Algo está mal');
+                window.location.href = "/index.html";
+            }
+        }
+        
       let api_url = "https://sw-seguro-back-productos.onrender.com";
       let token = null;
 
