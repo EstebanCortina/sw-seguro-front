@@ -98,6 +98,14 @@
       #btn_add_newProduct:hover {
         background-color: #ff4500;
       }
+
+      .BtnAtras {
+            padding-left: 1;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
   </head>
 
@@ -107,6 +115,9 @@
     </header>
 
     <main>
+      <button id="atrasBtn" class="Btn_Atras">
+        <img src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg" alt="Home" style="width: 50px; height: 50px;">
+    </button>
       <section id="productos">
         <!-- Los productos se cargarán aquí dinámicamente -->
       </section>
@@ -116,6 +127,12 @@
     </main>
 
     <script>
+      // Función ir a Home
+      let btnHome = document.getElementById('atrasBtn');
+      btnHome.addEventListener('click', () => {
+        window.location.href = "/home.html";
+      });
+      
         //Cada que se cargue la página, hacer que el botón se veo o no se vea dependiendo de si es profe o alumno.
         document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
         
