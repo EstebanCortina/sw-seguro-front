@@ -247,8 +247,13 @@
           (item) => item.id === producto.id
         );
         // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
-        producto.quantity = cantidad;
-        carrito.push(producto);
+        if (productoExistente) {
+          producto.quantity = cantidad;
+        } else {
+          producto.quantity = cantidad;
+          carrito.push(producto);
+        }
+
         console.log(producto);
 
         // Guarda el carrito actualizado en el localStorage
