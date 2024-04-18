@@ -114,6 +114,7 @@
   </head>
 
   <body>
+    <button id="btn_goHome">Home</button>
     <div class="container">
       <!-- Barra lateral -->
 
@@ -145,6 +146,15 @@
       if (!token) {
         window.location.href = "/";
       }
+
+      // Función para volver a Home
+      let goHome = document.getElementById('btn_goHome');
+      
+      goHome.addEventListener('click', () => {
+        if (token) {
+          window.location.href = "/home.html";
+        }
+      });
 
       // Cargar datos de los usuarios
       get_users().then((res) => {
