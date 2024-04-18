@@ -78,6 +78,14 @@
         #enviarDatos:hover {
             background-color: #0056b3;
         }
+
+        .BtnAtras {
+            padding-left: 1;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -87,6 +95,10 @@
     </header>
 
     <main>
+        <!-- BOTÓN PARA IR HACIA ATRÁS -->
+        <button id="btn_atras" class="BtnAtras">
+            <img src="https://images.emojiterra.com/mozilla/512px/1f519.png" alt="Home" style="width: 50px; height: 50px;">
+        </button>
         <section id="carrito">
             <!-- Los productos en el carrito se cargarán aquí dinámicamente -->
         </section>
@@ -96,11 +108,22 @@
 
     <script>
         let api_url = "https://sw-seguro-back-productos.onrender.com";
-        let token = null;
-
+        
+        let token = sessionStorage.getItem("gToken");
+        console.log(token);
+        
+        // Validar la sesión
+        if (!token) {
+            window.location.href = "/";
+        }
+        
         let productos_procedentes = null;
 
-
+        // Función para botón ir atrás
+        let btnAtras = document.getElementById('btn_atras');
+        btnAtras.addEventListener('click', () => {
+           window.location.href = "/products.html";
+        });
 
         // Cargar carrito desde localStorage
         function cargarCarrito() {
