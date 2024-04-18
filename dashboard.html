@@ -68,6 +68,24 @@
         background-color: #2cb82c;
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
       }
+
+      .BtnAtras {
+        float: right;
+      }
+
+      header {
+        height: 50px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 999;
+        display: flex; /* Utilizamos Flexbox */
+        justify-content: space-between; /* Alinea los elementos a los extremos */
+        align-items: center; /* Centra verticalmente los elementos */
+      }
       /* Estilo de la tabla de usuarios */
       table {
         width: 100%;
@@ -114,7 +132,16 @@
   </head>
 
   <body>
-    <button id="btn_goHome">Home</button>
+    <header>
+      <h1 style="margin: 40px">Tienda de Productos</h1>
+      <button style="margin: 40px" id="atrasBtn" class="BtnAtras">
+        <img
+          src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg"
+          alt="Home"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </header>
     <div class="container">
       <!-- Barra lateral -->
 
@@ -227,6 +254,7 @@
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
+            withCredentials: true,
           })
           .then((data) => {
             if (data.data.httpStatus === 200) {
@@ -248,6 +276,7 @@
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
+            withCredentials: true,
           })
           .then((data) => {
             if (data.data.httpStatus === 200) {
