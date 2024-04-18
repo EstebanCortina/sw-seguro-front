@@ -75,6 +75,13 @@
     </form>
 
     <script>
+        // Validar sesión
+        window.addEventListener("DOMContentLoaded", () => {
+           if (!token) {
+            window.location.href = "/";
+           }
+        });
+        
         // const form = document.getElementById('addProductForm');
         const btn_agregarProd = document.getElementById('addProduct');
         const btn_volver = document.getElementById('btn_volver');
