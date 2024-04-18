@@ -258,8 +258,10 @@
           })
           .then((data) => {
             if (data.data.httpStatus === 200) {
-              alert("Usuario desactivado");
-              actualizarBotones(id);
+              get_users().then((res) => {
+                agregarFilasTabla(res);
+              });
+              //actualizarBotones(id);
             } else {
               console.error(data);
             }
@@ -280,8 +282,10 @@
           })
           .then((data) => {
             if (data.data.httpStatus === 200) {
-              alert("Usuario activado");
-              actualizarBotones(id);
+              get_users().then((res) => {
+                agregarFilasTabla(res);
+              });
+              //actualizarBotones(id);
             } else {
               console.error(data);
             }
