@@ -131,28 +131,28 @@
         });
 
         // Cada que se cargue la página, hacer que el botón se vea o no se vea dependiendo de si es profe o alumno.
-        // document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
+        document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
 
         // Función para saber si es profe o alumno
-        // function ajustar_Visibilidad() {
-        //     const info = sessionStorage.getItem("info");
+        function ajustar_Visibilidad() {
+            const info = sessionStorage.getItem("info");
 
-        //     if (info) {
-        //         const userInfo = JSON.parse(info);
-        //         const userType = userInfo.user_type;
+            if (info) {
+                const userInfo = JSON.parse(info);
+                const userType = userInfo.user_type;
 
-        //         const botonAgregar = document.getElementById("btn_add_newProduct");
+                const botonAgregar = document.getElementById("btn_add_newProduct");
 
-        //         if (userType === "profesor") {
-        //             botonAgregar.style.display = "block";
-        //         } else if (userType === "alumno") {
-        //             botonAgregar.style.display = "none";
-        //         }
-        //     } else {
-        //         console.error('Algo está mal');
-        //         window.location.href = "/index.html";
-        //     }
-        // }
+                if (userType === "profesor") {
+                    botonAgregar.style.display = "block";
+                } else if (userType === "alumno") {
+                    botonAgregar.style.display = "none";
+                }
+            } else {
+                console.error('Algo está mal');
+                window.location.href = "/index.html";
+            }
+        }
 
         // Variables globales
         const api_url = "https://sw-seguro-back-productos.onrender.com";
