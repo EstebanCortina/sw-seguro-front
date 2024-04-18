@@ -105,6 +105,8 @@
       }
 
       document.addEventListener("DOMContentLoaded", function() {
+      // Espera a que se cargue completamente el script de Google Sign-In
+      document.getElementById("google-script").addEventListener("load", function() {
         google.accounts.id.initialize({
           client_id: "7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com",
           callback: (resp) => {
@@ -122,6 +124,9 @@
 
         const google_container = document.getElementById("google-container");
       });
+    });
+
+
       const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
