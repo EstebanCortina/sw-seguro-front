@@ -239,23 +239,17 @@
       }
 
       // Función para agregar un producto al carrito
-      function agregarAlCarrito(producto, cantidad = 1) {
+      function agregarAlCarrito(producto, cantidad) {
         const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
         // Busca si el producto ya existe en el carrito
         const productoExistente = carrito.find(
           (item) => item.id === producto.id
         );
-
-        if (productoExistente) {
-          // Si el producto ya existe en el carrito, actualiza la cantidad
-          productoExistente.quantity += cantidad;
-        } else {
-          // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
-          producto.quantity = cantidad;
-          carrito.push(producto);
-          console.log(producto);
-        }
+        // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
+        producto.quantity = cantidad;
+        carrito.push(producto);
+        console.log(producto);
 
         // Guarda el carrito actualizado en el localStorage
         localStorage.setItem("carrito", JSON.stringify(carrito));
