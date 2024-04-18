@@ -105,6 +105,7 @@
       <p id="userType"></p>
       <div class="btn-container">
         <button onclick="logout()" class="btn btn-danger">Logout</button>
+        <button class="btn btn-danger" id="dashBtn">Dashboard</button>
         <button onclick="go_Store()" class="btn btn-success">Tienda</button>
       </div>
     </div>
@@ -136,6 +137,28 @@
         sessionStorage.removeItem("info");
         window.location.href = "/";
       }
+
+      let dashBtn = document.getElementById('dashBtn');
+      // Función para ir a dashboard si es profe (lo sé, teniendo la discriminacion por userType en el window.onload, no necesito validar esto)
+      dashBtn.addEventListener('click', () => {
+        if (prueba.user_type === "profesor") {
+          window.location.href = "/dashboard.html";
+        } else {
+          window.location.href = "/";
+        }
+      });
+
+      // let prueba = {
+      //   user_type: "alumno"
+      // }
+
+      // Función para ocultar boton dashboard si es alumno
+      window.onload = () => {
+        if (prueba.user_type === "alumno") {
+          dashBtn.style.display = "none";
+        }
+      }
+      
 
       // Redirigir a la tienda
       function go_Store() {
