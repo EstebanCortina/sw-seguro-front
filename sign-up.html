@@ -84,7 +84,14 @@
   let correo = document.getElementById("correo");
   let pass = document.getElementById("pass");
   let userType = document.getElementById("user_type_name");
-  let register = document.getElementById('register')
+  let register = document.getElementById('register');
+
+  function areEmpty() {
+    if (nombre.value && correo.value && pass.value && userType.value) {
+      return false;
+    }
+    return true;
+  }
 
   let api_url = "https://sw-seguro-back-productos.onrender.com";
 
@@ -95,6 +102,11 @@
     return hashedPassword.toString(CryptoJS.enc.Hex);
   }
   register.addEventListener('click', () => {
+    // Validación de llenado de inputs
+    if (areEmpty()) {
+      alert("Completa todos los campos");
+      return;
+    }
     let new_user = {
         "name": nombre.value,
         "email": correo.value,

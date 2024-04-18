@@ -82,6 +82,13 @@
             window.location.href = "/";
            }
         });
+
+        function areEmpty() {
+            if (nombre.value && correo.value && pass.value && userType.value) {
+                return false;
+            }
+            return true;
+        }
         
         // const form = document.getElementById('addProductForm');
         const btn_agregarProd = document.getElementById('addProduct');
@@ -89,6 +96,11 @@
 
         // Función para manejar el formulario
         btn_agregarProd.addEventListener('click', () => {
+            // Validación de llenado de inputs
+            if (areEmpty()) {
+                alert("Debes llenar todos los campos");
+                return;
+            }
             // event.preventDefault();//Se supone que esto evita el envío tradicional del forms. No refresca la pag para que tu lo manejes como quieras.
 
             // Obtener los valores de los campos del formulario
