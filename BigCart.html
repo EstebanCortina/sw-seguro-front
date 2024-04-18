@@ -1,282 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carrito de Compras</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-        }
+      header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+      }
 
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+      main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
 
-        h1 {
-            margin: 0;
-        }
+      h1 {
+        margin: 0;
+      }
 
-        /* Estilos de la sección carrito */
-        #carrito {
-            padding: 20px;
-        }
+      /* Estilos de la sección carrito */
+      #carrito {
+        padding: 20px;
+      }
 
-        /* Estilos de los productos en el carrito */
-        .producto {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
+      /* Estilos de los productos en el carrito */
+      .producto {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
 
-        img {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-        }
+      img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
 
-        /* Estilos de los botones */
-        button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      /* Estilos de los botones */
+      button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        button:hover {
-            background-color: #c82333;
-        }
+      button:hover {
+        background-color: #c82333;
+      }
 
-        #enviarDatos {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+      #enviarDatos {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
 
-        #enviarDatos:hover {
-            background-color: #0056b3;
-        }
+      #enviarDatos:hover {
+        background-color: #0056b3;
+      }
 
-        .BtnAtras {
-            padding-left: 1;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .BtnAtras {
+        padding-left: 1;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Carrito de Compras</h1>
+      <h1>Carrito de Compras</h1>
     </header>
 
     <main>
-        <!-- BOTÓN PARA IR HACIA ATRÁS -->
-        <button id="btn_atras" class="BtnAtras">
-            <img src="https://images.emojiterra.com/mozilla/512px/1f519.png" alt="Home" style="width: 50px; height: 50px;">
-        </button>
-        <section id="carrito">
-            <!-- Los productos en el carrito se cargarán aquí dinámicamente -->
-        </section>
-        <!-- Botón para enviar los datos del carrito al backend -->
-        <button id="enviarDatos">Comprar</button>
+      <!-- BOTÓN PARA IR HACIA ATRÁS -->
+      <button id="btn_atras" class="BtnAtras">
+        <img
+          src="https://images.emojiterra.com/mozilla/512px/1f519.png"
+          alt="Home"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+      <section id="carrito">
+        <!-- Los productos en el carrito se cargarán aquí dinámicamente -->
+      </section>
+      <!-- Botón para enviar los datos del carrito al backend -->
+      <button id="enviarDatos">Comprar</button>
     </main>
 
     <script>
-        let api_url = "https://sw-seguro-back-productos.onrender.com";
-        
-        let token = sessionStorage.getItem("gToken");
-        console.log(token);
-        
-        // Validar la sesión
-        if (!token) {
-            window.location.href = "/";
-        }
-        
-        // let productos_procedentes = null;
+      let api_url = "https://sw-seguro-back-productos.onrender.com";
 
-        // Función para botón ir atrás
-        let btnAtras = document.getElementById('btn_atras');
-        btnAtras.addEventListener('click', () => {
-           window.location.href = "/products.html";
-        });
+      let token = sessionStorage.getItem("gToken");
+      console.log(token);
 
-        // Cargar carrito desde localStorage
-        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        function cargarCarrito() {
+      // Validar la sesión
+      if (!token) {
+        window.location.href = "/";
+      }
 
-            // Obtiene la sección donde se mostrarán los productos en el carrito
-            const carritoContainer = document.getElementById('carrito');
+      // let productos_procedentes = null;
 
-            // Limpia la sección del carrito
-            carritoContainer.innerHTML = '';
+      // Función para botón ir atrás
+      let btnAtras = document.getElementById("btn_atras");
+      btnAtras.addEventListener("click", () => {
+        window.location.href = "/products.html";
+      });
 
-            // Contador para los productos
-            const conteoProductos = {};
+      // Cargar carrito desde localStorage
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      function cargarCarrito() {
+        // Obtiene la sección donde se mostrarán los productos en el carrito
+        const carritoContainer = document.getElementById("carrito");
 
-            // Contar la cantidad de veces que cada producto ha sido agregado al carrito
-            carrito.forEach(producto => {
-                const claveProducto = `${producto.name}_${producto.price}`;
-                if (conteoProductos[claveProducto]) {
-                    conteoProductos[claveProducto].cantidad++;
-                } else {
-                    conteoProductos[claveProducto] = { ...producto, cantidad: 1 };
-                }
-            });
+        // Limpia la sección del carrito
+        carritoContainer.innerHTML = "";
 
-            // Mostrar los productos en el carrito
-            Object.values(conteoProductos).forEach(producto => {
-                const productoDiv = document.createElement('div');
-                productoDiv.className = 'producto';
+        // Contador para los productos
+        const conteoProductos = {};
+        // Mostrar los productos en el carrito
+        Object.values(conteoProductos).forEach((producto) => {
+          const productoDiv = document.createElement("div");
+          productoDiv.className = "producto";
 
-                // Crear elementos de imagen y detalles del producto
-                const img = document.createElement('img');
-                img.src = producto.img_url;
-                img.alt = producto.name;
+          // Crear elementos de imagen y detalles del producto
+          const img = document.createElement("img");
+          img.src = producto.img_url;
+          img.alt = producto.name;
 
-                const detalles = document.createElement('div');
-                detalles.innerHTML = `
+          const detalles = document.createElement("div");
+          detalles.innerHTML = `
                     <strong>${producto.name}</strong><br>
                     Precio: $${producto.price}<br>
                     Cantidad: ${producto.cantidad}
                 `;
 
-                // Botón para eliminar el producto del carrito
-                const button = document.createElement('button');
-                button.textContent = 'Eliminar';
-                button.addEventListener('click', () => {
-                    eliminarDelCarrito(producto);
-                });
+          // Botón para eliminar el producto del carrito
+          const button = document.createElement("button");
+          button.textContent = "Eliminar";
+          button.addEventListener("click", () => {
+            eliminarDelCarrito(producto);
+          });
 
-                // Agregar elementos al contenedor de producto
-                productoDiv.appendChild(img);
-                productoDiv.appendChild(detalles);
-                productoDiv.appendChild(button);
-                carritoContainer.appendChild(productoDiv);
-            });
-        }
+          // Agregar elementos al contenedor de producto
+          productoDiv.appendChild(img);
+          productoDiv.appendChild(detalles);
+          productoDiv.appendChild(button);
+          carritoContainer.appendChild(productoDiv);
+        });
+      }
 
-        // Eliminar producto del carrito
-        function eliminarDelCarrito(productoAEliminar) {
-            // Obtener el carrito actual desde localStorage
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      // Eliminar producto del carrito
+      function eliminarDelCarrito(productoAEliminar) {
+        // Obtener el carrito actual desde localStorage
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-            // Filtrar el carrito para eliminar el producto especificado
-            carrito = carrito.filter(producto => {
-                return producto.name !== productoAEliminar.name || producto.price !== productoAEliminar.price || productoAEliminar.cantidad <= 0;
-            });
+        // Filtrar el carrito para eliminar el producto especificado
+        carrito = carrito.filter((producto) => {
+          return (
+            producto.name !== productoAEliminar.name ||
+            producto.price !== productoAEliminar.price ||
+            productoAEliminar.cantidad <= 0
+          );
+        });
 
-            // Actualizar localStorage con el carrito modificado
-            localStorage.setItem('carrito', JSON.stringify(carrito));
+        // Actualizar localStorage con el carrito modificado
+        localStorage.setItem("carrito", JSON.stringify(carrito));
 
-            // Volver a cargar el carrito
-            cargarCarrito();
-        }
+        // Volver a cargar el carrito
+        cargarCarrito();
+      }
 
+      // <--------------------------------------------------AQUÍ MANDAR CARRITO A BACK---------------------------------------------------------------->
+      // Hacer forEach para pushear cada producto al array de objetos.
+      function send_cart_toBack() {
+        let nuevoProducto = [];
 
+        carrito.forEach((producto) => {
+          let nuevoObjeto = {
+            id: producto.id,
+            name: producto.name,
+            price: producto.price,
+            quantity: producto.quantity,
+          };
 
-        // <--------------------------------------------------AQUÍ MANDAR CARRITO A BACK---------------------------------------------------------------->
-        // Hacer forEach para pushear cada producto al array de objetos.
-        function send_cart_toBack() {
-            let nuevoProducto = [];
+          nuevoProducto.push(nuevoObjeto);
+        });
 
-            carrito.forEach(producto => {
-                let nuevoObjeto = {
-                    id: producto.id,
-                    name: producto.name,
-                    price: producto.price,
-                    quantity: producto.quantity
-                };
+        axios
+          .post(`${api_url}/products/buy`, nuevoProducto, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          })
+          .then((response) => {
+            if (response.data.httpStatus === 200) {
+              localStorage.removeItem("carrito");
+              console.log("Carrito comprado con éxito");
+              window.location.href = "/products.html";
+            }
+          })
+          .catch((error) => {
+            console.error("Error: ", response);
+          });
+      }
 
-                nuevoProducto.push(nuevoObjeto);
-            });
+      let btnPurchase = document.getElementById("enviarDatos");
+      btnPurchase.addEventListener("click", send_cart_toBack);
 
-            axios
-            .post(`${api_url}/products/buy`, nuevoProducto, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-                withCredentials: true,
-            })
-            .then((response) => {
-                if (response.data.httpStatus === 200) {
-                    localStorage.removeItem("carrito");
-                    console.log('Carrito comprado con éxito');
-                    window.location.href = "/products.html";
-                }
-            })
-            .catch((error) => {
-                console.error('Error: ', response);
-            });
-        }
+      // Función para enviar los datos del carrito al backend
+      // async function enviarDatosAlBackend() {
+      //     try {
+      //         // Obtener los datos del carrito
+      //         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-        let btnPurchase = document.getElementById('enviarDatos');
-        btnPurchase.addEventListener('click', send_cart_toBack);
-        
+      //         // Enviar una solicitud POST al backend
+      //         const respuesta = await fetch('url_de_ESTEBAN', {
+      //             method: 'POST',
+      //             headers: {
+      //                 'Content-Type': 'application/json'
+      //             },
+      //             body: JSON.stringify(carrito)
+      //         });
 
-        // Función para enviar los datos del carrito al backend
-        // async function enviarDatosAlBackend() {
-        //     try {
-        //         // Obtener los datos del carrito
-        //         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      //         // Verificar la respuesta del servidor
+      //         if (respuesta.ok) {
+      //             alert('Los datos se enviaron correctamente al backend.');
+      //             // Puedes limpiar el carrito de localStorage si lo deseas
+      //             localStorage.removeItem('carrito');
+      //             // Actualizar el contenido del carrito
+      //             cargarCarrito();
+      //         } else {
+      //             alert('Hubo un error al enviar los datos.');
+      //         }
+      //     } catch (error) {
+      //         alert('Hubo un error al enviar los datos.');
+      //         console.error(error);
+      //     }
+      // }
 
-        //         // Enviar una solicitud POST al backend
-        //         const respuesta = await fetch('url_de_ESTEBAN', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body: JSON.stringify(carrito)
-        //         });
+      // Inicialización
+      window.addEventListener("DOMContentLoaded", cargarCarrito);
 
-        //         // Verificar la respuesta del servidor
-        //         if (respuesta.ok) {
-        //             alert('Los datos se enviaron correctamente al backend.');
-        //             // Puedes limpiar el carrito de localStorage si lo deseas
-        //             localStorage.removeItem('carrito');
-        //             // Actualizar el contenido del carrito
-        //             cargarCarrito();
-        //         } else {
-        //             alert('Hubo un error al enviar los datos.');
-        //         }
-        //     } catch (error) {
-        //         alert('Hubo un error al enviar los datos.');
-        //         console.error(error);
-        //     }
-        // }
-
-        // Inicialización
-        window.addEventListener('DOMContentLoaded', cargarCarrito);
-
-        // Agregar evento de clic al botón de enviar datos
-        document.getElementById('enviarDatos').addEventListener('click', send_cart_toBack);
+      // Agregar evento de clic al botón de enviar datos
+      document
+        .getElementById("enviarDatos")
+        .addEventListener("click", send_cart_toBack);
     </script>
-</body>
-
+  </body>
 </html>
