@@ -130,8 +130,9 @@
       });
 
       // Cargar carrito desde localStorage
-      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
       function cargarCarrito() {
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
         // Obtiene la sección donde se mostrarán los productos en el carrito
         const carritoContainer = document.getElementById("carrito");
 
@@ -139,9 +140,9 @@
         carritoContainer.innerHTML = "";
 
         // Contador para los productos
-        const conteoProductos = {};
+
         // Mostrar los productos en el carrito
-        Object.values(conteoProductos).forEach((producto) => {
+        carrito.forEach((producto) => {
           const productoDiv = document.createElement("div");
           productoDiv.className = "producto";
 
@@ -154,7 +155,7 @@
           detalles.innerHTML = `
                     <strong>${producto.name}</strong><br>
                     Precio: $${producto.price}<br>
-                    Cantidad: ${producto.cantidad}
+                    Cantidad: ${producto.quantity}
                 `;
 
           // Botón para eliminar el producto del carrito
