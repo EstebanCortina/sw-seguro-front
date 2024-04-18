@@ -148,9 +148,9 @@
       }
 
       // Función para volver a Home
-      let goHome = document.getElementById('btn_goHome');
-      
-      goHome.addEventListener('click', () => {
+      let goHome = document.getElementById("btn_goHome");
+
+      goHome.addEventListener("click", () => {
         if (token) {
           window.location.href = "/home.html";
         }
@@ -221,16 +221,15 @@
 
       // Funciones para desactivar y activar usuarios
       function disable(id) {
-        fetch(`${api_url}/users/${id}/disable`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((response) => response.json())
+        axios
+          .patch(`${api_url}/users/${id}/disable`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((data) => {
-            if (data.httpStatus === 200) {
+            if (data.data.httpStatus === 200) {
               alert("Usuario desactivado");
               actualizarBotones(id);
             } else {
@@ -243,16 +242,15 @@
       }
 
       function enable(id) {
-        fetch(`${api_url}/users/${id}/enable`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((response) => response.json())
+        axios
+          .patch(`${api_url}/users/${id}/enable`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((data) => {
-            if (data.httpStatus === 200) {
+            if (data.data.httpStatus === 200) {
               alert("Usuario activado");
               actualizarBotones(id);
             } else {
