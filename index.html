@@ -104,23 +104,24 @@
         return hashedPassword.toString(CryptoJS.enc.Hex);
       }
 
-      google.accounts.id.initialize({
-        client_id:
-          "7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com",
-        callback: (resp) => {
-          console.log(resp.credential);
-          login(resp.credential, email.value, pass.value);
-        },
-      });
+      document.addEventListener("DOMContentLoaded", function() {
+        google.accounts.id.initialize({
+          client_id: "7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com",
+          callback: (resp) => {
+            console.log(resp.credential);
+            login(resp.credential, email.value, pass.value);
+          },
+        });
 
-      google.accounts.id.renderButton(document.getElementById("google-btn"), {
-        theme: "filled_blue",
-        size: "large",
-        shape: "rectangle",
-        width: 350,
-      });
+        google.accounts.id.renderButton(document.getElementById("google-btn"), {
+          theme: "filled_blue",
+          size: "large",
+          shape: "rectangle",
+          width: 350,
+        });
 
-      const google_container = document.getElementById("google-container");
+        const google_container = document.getElementById("google-container");
+      });
       const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
