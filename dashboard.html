@@ -249,10 +249,10 @@
       // Funciones para desactivar y activar usuarios
       function disable(id) {
         axios
-          .patch(`${api_url}/users/${id}/disable`, {
+          .patch(`${api_url}/users/${id}/disable`, {}, {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              "Authorization": `Bearer ${token}`,
             },
             withCredentials: true,
           })
@@ -271,10 +271,10 @@
 
       function enable(id) {
         axios
-          .patch(`${api_url}/users/${id}/enable`, {
+          .patch(`${api_url}/users/${id}/enable`, {},{
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              "Authorization": `Bearer ${token}`,
             },
             withCredentials: true,
           })
