@@ -23,28 +23,24 @@
 
       /* Estilo de la barra lateral */
       .sidebar {
-        width: 250px;
+        width: auto;
+        height: auto;
         background-color: #3a7d44;
         color: #fff;
-        border-radius: 10px 0 0 10px;
+        border-radius: 10px 10px 10px 10px;
         padding: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         position: relative;
       }
 
-      /* Estilo de la tabla de usuarios */
-      .user-info {
-        flex: 1;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 0 10px 10px 0;
+      #user-info {
+        text-align: center;
       }
-
+      /* Estilo de la tabla de usuarios */
       .btn-container {
         display: flex;
         justify-content: center;
         position: absolute;
-        bottom: 10px; /* Ubicación de los botones */
         left: 50%; /* Centra los botones horizontalmente */
         transform: translateX(-50%);
       }
@@ -80,6 +76,9 @@
         background-color: #2cb82c;
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
       }
+      .BtnAtras {
+        float: right;
+      }
 
       h2 {
         font-weight: 700;
@@ -90,6 +89,19 @@
         margin: 10px 0;
         font-size: 1rem;
       }
+      header {
+        height: 50px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 999;
+        display: flex; /* Utilizamos Flexbox */
+        justify-content: space-between; /* Alinea los elementos a los extremos */
+        align-items: center; /* Centra verticalmente los elementos */
+      }
 
       strong {
         font-weight: 700;
@@ -98,16 +110,27 @@
   </head>
 
   <body>
-    <div id="personal-info" class="sidebar">
-      <h2>Información Personal</h2>
-      <p id="email"></p>
-      <p id="name"></p>
-      <p id="userType"></p>
-      <div class="btn-container">
-        <button onclick="logout()" class="btn btn-danger">Logout</button>
-        <button class="btn btn-danger" id="dashBtn">Dashboard</button>
-        <button onclick="go_Store()" class="btn btn-success">Tienda</button>
+    <header>
+      <h1 style="margin: 40px">Tienda de Productos</h1>
+      <button style="margin: 40px" id="atrasBtn" class="BtnAtras">
+        <img
+          src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg"
+          alt="Home"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+    </header>
+
+    <div class="sidebar">
+      <div id="user-info">
+        <h2>Información Personal</h2>
+        <p id="email"></p>
+        <p id="name"></p>
+        <p id="userType"></p>
       </div>
+      <button onclick="logout()" class="btn btn-danger">Logout</button>
+      <button class="btn btn-danger" id="dashBtn">Dashboard</button>
+      <button onclick="go_Store()" class="btn btn-success">Tienda</button>
     </div>
 
     <script>
@@ -138,9 +161,9 @@
         window.location.href = "/";
       }
 
-      let dashBtn = document.getElementById('dashBtn');
+      let dashBtn = document.getElementById("dashBtn");
       // Función para ir a dashboard si es profe (lo sé, teniendo la discriminacion por userType en el window.onload, no necesito validar esto)
-      dashBtn.addEventListener('click', () => {
+      dashBtn.addEventListener("click", () => {
         if (info.user_type === "profesor") {
           window.location.href = "/dashboard.html";
         } else {
@@ -157,8 +180,7 @@
         if (info.user_type === "alumno") {
           dashBtn.style.display = "none";
         }
-      }
-      
+      };
 
       // Redirigir a la tienda
       function go_Store() {
