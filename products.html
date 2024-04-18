@@ -15,15 +15,25 @@
       }
 
       header {
+        height: 50px;
         background-color: #333;
         color: white;
-        padding: 10px 20px;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 999;
+        display: flex; /* Utilizamos Flexbox */
+        justify-content: space-between; /* Alinea los elementos a los extremos */
+        align-items: center; /* Centra verticalmente los elementos */
       }
-
+      .BtnAtras {
+        float: right;
+      }
       main {
         padding: 20px;
         max-width: 1200px;
-        margin: auto;
+        margin: 100px auto 0; /* Margen superior de 100px y margen automático en los laterales */
       }
 
       h1 {
@@ -45,12 +55,6 @@
         border-radius: 5px;
         padding: 10px;
         text-align: center;
-      }
-
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: 5px;
       }
 
       /* Estilos de los botones */
@@ -99,27 +103,20 @@
         background-color: #ff4500;
       }
 
-      .BtnAtras {
-        padding-left: 1;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
     </style>
   </head>
   <body>
     <header>
-      <h1>Tienda de Productos</h1>
-    </header>
-    <main>
-      <button id="atrasBtn" class="Btn_Atras">
+      <h1 style="margin: 40px">Tienda de Productos</h1>
+      <button style="margin: 40px" id="atrasBtn" class="BtnAtras">
         <img
           src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg"
           alt="Home"
           style="width: 50px; height: 50px"
         />
       </button>
+    </header>
+    <main>
       <section id="productos">
         <!-- Los productos se cargarán aquí dinámicamente -->
       </section>
