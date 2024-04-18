@@ -195,8 +195,8 @@
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price} MXN</h4>
-                    <input type=number class="agregar-cantidad" data-cantidad=0 data-nombre-producto="${
-                      producto.name
+                    <input value=1 type=number class="agregar-cantidad" data-cantidad=1 data-producto-id="${
+                      producto.id
                     }"></input>
                     <button class="agregar-carrito" data-producto='${JSON.stringify(
                       producto
@@ -226,7 +226,10 @@
           boton.addEventListener("click", function () {
             const productoJSON = this.getAttribute("data-producto");
             const producto = JSON.parse(productoJSON);
-            const cantidad = 1; // Puedes cambiar este valor según cómo quieras manejar la cantidad
+            const elemento = document.querySelector(
+              `[data-producto-id="${producto.id}"]`
+            );
+            const cantidad = elemento[0].getAttribute("data-cantidad");
 
             // Agregar el producto al carrito con la cantidad especificada
             agregarAlCarrito(producto, cantidad);
