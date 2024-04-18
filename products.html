@@ -248,7 +248,8 @@
         );
         // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
         if (productoExistente) {
-          producto.quantity = cantidad;
+          productoExistente.quantity = cantidad;
+          localStorage.setItem("carrito", JSON.stringify(carrito));
         } else {
           producto.quantity = cantidad;
           carrito.push(producto);
