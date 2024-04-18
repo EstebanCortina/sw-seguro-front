@@ -118,8 +118,8 @@
             })
             .then((response) => {
                 if (response.data.httpStatus === 200) {
-                    console.log(response.data.data);
-                    // window.location.href = "/products.html";
+                    alert("Producto Creado")
+                    window.location.href = "./products";
                 } else {
                     console.error('Error: ', response.data.data.httpStatus);
                 }

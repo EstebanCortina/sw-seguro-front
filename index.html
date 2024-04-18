@@ -110,7 +110,6 @@
         google.accounts.id.initialize({
           client_id: "7291503733-a1tak54ncubord80cbd84i1t3vcc9arg.apps.googleusercontent.com",
           callback: (resp) => {
-            console.log(resp.credential);
             login(resp.credential, email.value, pass.value);
           },
         });
@@ -148,7 +147,6 @@
           })
           .then((response) => {
             if (response.data.httpStatus === 200) {
-              console.log(response.data.data)
               let {email, name, user_type_name} = response.data.data;
               sessionStorage.setItem("info", JSON.stringify({"name": name, "email": email, "user_type": user_type_name}))
               sessionStorage.setItem("gToken", token)
@@ -156,7 +154,6 @@
             }
           })
           .catch((error) => {
-            console.log(error.response);
             alert("Revisa tus credenciales");
           });
       }

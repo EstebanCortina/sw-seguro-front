@@ -114,7 +114,7 @@
       let api_url = "https://sw-seguro-back-productos.onrender.com";
 
       let token = sessionStorage.getItem("gToken");
-      console.log(token);
+      
 
       // Validar la sesión
       if (!token) {
@@ -221,8 +221,8 @@
           .then((response) => {
             if (response.data.httpStatus === 200) {
               localStorage.removeItem("carrito");
-              console.log("Carrito comprado con éxito");
-              window.location.href = "/products.html";
+              alert("Productos Comprados")
+              window.location.href = "./products";
             }
           })
           .catch((error) => {

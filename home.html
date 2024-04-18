@@ -140,7 +140,6 @@
       }
 
       let info = JSON.parse(sessionStorage.getItem("info"));
-      console.log(info);
 
       let emailText = document.getElementById("email");
       let nameText = document.getElementById("name");
@@ -189,57 +188,3 @@
     </script>
   </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      .sidebar {
-        width: 200px;
-        background-color: #4caf50;
-        /* Color diferenciador */
-        color: #fff;
-        /* Texto en color blanco para mayor contraste */
-        border-radius: 0 10px 10px 0;
-        /* Esquinas redondeadas solo en el lado derecho */
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="personal-info" class="sidebar">
-      <h2>Información Personal</h2>
-      <p id="email"></p>
-      <p id="name"></p>
-      <p id="userType"></p>
-    </div>
-    <script>
-      let token = sessionStorage.getItem("gToken")
-      if (!token){
-        // SI NO TIENE TOKEN SIGNIFICA QUE NO HA INICIADO SESION Y LO MANDA AL LOGIN
-        window.location.href = "./index.html"
-      }
-
-      //AQUI ESTA LA INFO DEL USUARIO ACTUAL
-      // let info = "ola"; //INFO DE PRUEBA
-      let info = JSON.parse(sessionStorage.getItem("info"))
-      console.log(info)
-
-      let emailText = document.getElementById('email');
-      let nameText = document.getElementById('name');
-      let userTypeText = document.getElementById('userType');
-
-      if (info) {
-        // Actualiza los elementos en la barra lateral con la información del usuario
-        emailText.innerHTML = `<strong>Email: </strong>${info.email}`;
-        nameText.innerHTML = `<strong>Nombre: </strong>${info.name}`;
-        userTypeText.innerHTML = `<strong>Tipo de usuario: </strong>${info.user_type}`;
-      } else {
-          console.error('No se pudo obtener la información del usuario.');
-      }
-    </script>
-  </body>
-</html> -->

@@ -214,10 +214,9 @@
           input.addEventListener("input", function (event) {
             const numero = parseFloat(event.target.value);
             if (!isNaN(numero)) {
-              console.log("Se ha introducido el número:", numero);
               event.target.dataset.cantidad = numero;
             } else {
-              console.log("Entrada no válida. Por favor, introduce un número.");
+              alert("Por favor, introduce un número.");
             }
           });
         });
@@ -229,7 +228,6 @@
             const elemento = document.querySelector(
               `[data-producto-id="${producto.id}"]`
             );
-            console.log(elemento);
             const cantidad = elemento.getAttribute("data-cantidad");
 
             // Agregar el producto al carrito con la cantidad especificada
@@ -255,11 +253,9 @@
           carrito.push(producto);
         }
 
-        console.log(producto);
-
         // Guarda el carrito actualizado en el localStorage
         localStorage.setItem("carrito", JSON.stringify(carrito));
-        console.log(`${cantidad} ${producto.name} agregado al carrito`);
+        alert(`${cantidad} ${producto.name} agregado al carrito`);
       }
 
       // Inicialización al cargar la página
