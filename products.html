@@ -229,7 +229,8 @@
             const elemento = document.querySelector(
               `[data-producto-id="${producto.id}"]`
             );
-            const cantidad = elemento[0].getAttribute("data-cantidad");
+            console.log(elemento);
+            const cantidad = elemento.getAttribute("data-cantidad");
 
             // Agregar el producto al carrito con la cantidad especificada
             agregarAlCarrito(producto, cantidad);
