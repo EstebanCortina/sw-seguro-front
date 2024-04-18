@@ -214,7 +214,8 @@
 
       // Función para agregar filas a la tabla de usuarios
       function agregarFilasTabla(datosUsuarios) {
-        const tablaUsuarios = document.getElementById("tabla-usuarios");
+        let tablaUsuarios = document.getElementById("tabla-usuarios");
+        tablaUsuarios.innerHTML = "";
 
         datosUsuarios.forEach((usuario) => {
           const fila = document.createElement("tr");
