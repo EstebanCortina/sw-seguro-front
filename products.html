@@ -1,264 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda de Productos</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        /* Estilos generales */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+      /* Estilos generales */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-        }
+      header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+      }
 
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+      main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
 
-        h1 {
-            margin: 0;
-        }
+      h1 {
+        margin: 0;
+      }
 
-        /* Estilos de la sección productos */
-        #productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
+      /* Estilos de la sección productos */
+      #productos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
 
-        .producto {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            text-align: center;
-        }
+      .producto {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+      }
 
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
 
-        /* Estilos de los botones */
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: auto;
-            width: 50%;
-            text-align: center;
-        }
+      /* Estilos de los botones */
+      button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: auto;
+        width: 50%;
+        text-align: center;
+      }
 
-        button:hover {
-            background-color: #0f6622;
-        }
+      button:hover {
+        background-color: #0f6622;
+      }
 
-        /* Botones adicionales */
-        #btn_verCarrito {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-            font-size: 16px;
-        }
+      /* Botones adicionales */
+      #btn_verCarrito {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+        font-size: 16px;
+      }
 
-        #btn_add_newProduct {
-            background-color: #ff6347;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto;
-            font-size: 16px;
-        }
+      #btn_add_newProduct {
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+        font-size: 16px;
+      }
 
-        #btn_add_newProduct:hover {
-            background-color: #ff4500;
-        }
+      #btn_add_newProduct:hover {
+        background-color: #ff4500;
+      }
 
-        .BtnAtras {
-            padding-left: 1;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .BtnAtras {
+        padding-left: 1;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Tienda de Productos</h1>
+      <h1>Tienda de Productos</h1>
     </header>
     <main>
-        <button id="atrasBtn" class="Btn_Atras">
-            <img src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg" alt="Home" style="width: 50px; height: 50px;">
-        </button>
-        <section id="productos">
-            <!-- Los productos se cargarán aquí dinámicamente -->
-        </section>
-        <button id="btn_verCarrito">Ver carrito</button>
-        <button id="btn_add_newProduct">Agregar nuevo producto</button>
+      <button id="atrasBtn" class="Btn_Atras">
+        <img
+          src="https://banner2.cleanpng.com/20180420/vlq/kisspng-font-awesome-computer-icons-font-housing-logo-5ada418c752ba8.1327093815242530684799.jpg"
+          alt="Home"
+          style="width: 50px; height: 50px"
+        />
+      </button>
+      <section id="productos">
+        <!-- Los productos se cargarán aquí dinámicamente -->
+      </section>
+      <button id="btn_verCarrito">Ver carrito</button>
+      <button id="btn_add_newProduct">Agregar nuevo producto</button>
     </main>
 
     <script>
-        // Función ir a Home
-        const btnHome = document.getElementById('atrasBtn');
-        btnHome.addEventListener('click', () => {
-            window.location.href = "/home.html";
-        });
+      // Función ir a Home
+      const btnHome = document.getElementById("atrasBtn");
+      btnHome.addEventListener("click", () => {
+        window.location.href = "./home";
+      });
 
-        // Cada que se cargue la página, hacer que el botón se vea o no se vea dependiendo de si es profe o alumno.
-        document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
+      // Cada que se cargue la página, hacer que el botón se vea o no se vea dependiendo de si es profe o alumno.
+      document.addEventListener("DOMContentLoaded", ajustar_Visibilidad);
 
-        // Función para saber si es profe o alumno
-        function ajustar_Visibilidad() {
-            const info = sessionStorage.getItem("info");
+      // Función para saber si es profe o alumno
+      function ajustar_Visibilidad() {
+        const info = sessionStorage.getItem("info");
 
-            if (info) {
-                const userInfo = JSON.parse(info);
-                const userType = userInfo.user_type;
+        if (info) {
+          const userInfo = JSON.parse(info);
+          const userType = userInfo.user_type;
 
-                const botonAgregar = document.getElementById("btn_add_newProduct");
+          const botonAgregar = document.getElementById("btn_add_newProduct");
 
-                if (userType === "profesor") {
-                    botonAgregar.style.display = "block";
-                } else if (userType === "alumno") {
-                    botonAgregar.style.display = "none";
-                }
-            } else {
-                console.error('Algo está mal');
-                window.location.href = "/index.html";
-            }
+          if (userType === "profesor") {
+            botonAgregar.style.display = "block";
+          } else if (userType === "alumno") {
+            botonAgregar.style.display = "none";
+          }
+        } else {
+          console.error("Algo está mal");
+          window.location.href = "./";
         }
+      }
 
-        // Variables globales
-        const api_url = "https://sw-seguro-back-productos.onrender.com";
-        let token = null;
-        let productoDiv = document.getElementById("productos");
+      // Variables globales
+      const api_url = "https://sw-seguro-back-productos.onrender.com";
+      let token = null;
+      let productoDiv = document.getElementById("productos");
 
-        // Función para obtener los productos
-        async function obtenerProductos() {
-            try {
-                const response = await axios.get(`${api_url}/products`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    },
-                    withCredentials: true,
-                });
-                return response.data.data;
-            } catch (error) {
-                console.error(error);
-            }
+      // Función para obtener los productos
+      async function obtenerProductos() {
+        try {
+          const response = await axios.get(`${api_url}/products`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          });
+          return response.data.data;
+        } catch (error) {
+          console.error(error);
         }
+      }
 
-        // Cargar productos desde localStorage
-        function cargarProductos(productos) {
-            const productosContainer = document.getElementById("productos");
+      // Cargar productos desde localStorage
+      function cargarProductos(productos) {
+        const productosContainer = document.getElementById("productos");
 
-            // Limpiar la sección de productos
-            productosContainer.innerHTML = "";
+        // Limpiar la sección de productos
+        productosContainer.innerHTML = "";
 
-            // Agregar cada producto a la sección de productos
-            productos.forEach((producto) => {
-                // Crear div para cada producto
-                const productoDiv = document.createElement('div');
-                productoDiv.innerHTML = `
+        // Agregar cada producto a la sección de productos
+        productos.forEach((producto) => {
+          // Crear div para cada producto
+          const productoDiv = document.createElement("div");
+          productoDiv.innerHTML = `
                     <img src="${producto.img_url}" />
                     <h2>${producto.name}</h2>
                     <h4>Stock: ${producto.stock}</h4>
                     <h4>Precio: $${producto.price} MXN</h4>
-                    <button class="agregar-carrito" data-producto='${JSON.stringify(producto)}'>
+                    <input type=number class="agregar-cantidad" data-cantidad=0 data-nombre-producto="${
+                      producto.name
+                    }"></input>
+                    <button class="agregar-carrito" data-producto='${JSON.stringify(
+                      producto
+                    )}'>
                         Añadir ${producto.name} al carrito
                     </button>
                 `;
-                productoDiv.className = "producto";
+          productoDiv.className = "producto";
 
-                // Agregar el div al contenedor de productos
-                productosContainer.appendChild(productoDiv);
-            });
-
-            // Manejar eventos de clic para los botones de agregar al carrito
-            document.querySelectorAll('.agregar-carrito').forEach(boton => {
-                boton.addEventListener('click', function() {
-                    const productoJSON = this.getAttribute('data-producto');
-                    const producto = JSON.parse(productoJSON);
-                    const cantidad = 1; // Puedes cambiar este valor según cómo quieras manejar la cantidad
-
-                    // Agregar el producto al carrito con la cantidad especificada
-                    agregarAlCarrito(producto, cantidad);
-                });
-            });
-        }
-
-        // Función para agregar un producto al carrito
-        function agregarAlCarrito(producto, cantidad = 1) {
-            const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-            
-            // Busca si el producto ya existe en el carrito
-            const productoExistente = carrito.find(item => item.id === producto.id);
-
-            if (productoExistente) {
-                // Si el producto ya existe en el carrito, actualiza la cantidad
-                productoExistente.quantity += cantidad;
-            } else {
-                // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
-                producto.quantity = cantidad;
-                carrito.push(producto);
-                console.log(producto);
-            }
-
-            // Guarda el carrito actualizado en el localStorage
-            localStorage.setItem("carrito", JSON.stringify(carrito));
-            console.log(`${cantidad} ${producto.name} agregado al carrito`);
-        }
-
-        // Inicialización al cargar la página
-        window.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const productos = await obtenerProductos();
-                cargarProductos(productos);
-            } catch (error) {
-                console.error(error);
-            }
+          // Agregar el div al contenedor de productos
+          productosContainer.appendChild(productoDiv);
         });
 
-        // Botón para ver el carrito
-        document
-            .getElementById("btn_verCarrito")
-            .addEventListener("click", () => {
-                window.location.href = "BigCart.html";
-            });
+        document.querySelectorAll(".agregar-cantidad").forEach((input) => {
+          input.addEventListener("input", function (event) {
+            const numero = parseFloat(event.target.value);
+            if (!isNaN(numero)) {
+              console.log("Se ha introducido el número:", numero);
+              event.target.dataset.cantidad = numero;
+            } else {
+              console.log("Entrada no válida. Por favor, introduce un número.");
+            }
+          });
+        });
+        // Manejar eventos de clic para los botones de agregar al carrito
+        document.querySelectorAll(".agregar-carrito").forEach((boton) => {
+          boton.addEventListener("click", function () {
+            const productoJSON = this.getAttribute("data-producto");
+            const producto = JSON.parse(productoJSON);
+            const cantidad = 1; // Puedes cambiar este valor según cómo quieras manejar la cantidad
 
-        // Botón para redirigir a la página de agregar productos
-        document
-            .getElementById("btn_add_newProduct")
-            .addEventListener("click", () => {
-                window.location.href = "add_product.html";
-            });
+            // Agregar el producto al carrito con la cantidad especificada
+            agregarAlCarrito(producto, cantidad);
+          });
+        });
+      }
+
+      // Función para agregar un producto al carrito
+      function agregarAlCarrito(producto, cantidad = 1) {
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+        // Busca si el producto ya existe en el carrito
+        const productoExistente = carrito.find(
+          (item) => item.id === producto.id
+        );
+
+        if (productoExistente) {
+          // Si el producto ya existe en el carrito, actualiza la cantidad
+          productoExistente.quantity += cantidad;
+        } else {
+          // Si el producto no existe en el carrito, agrégalo con la cantidad especificada
+          producto.quantity = cantidad;
+          carrito.push(producto);
+          console.log(producto);
+        }
+
+        // Guarda el carrito actualizado en el localStorage
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        console.log(`${cantidad} ${producto.name} agregado al carrito`);
+      }
+
+      // Inicialización al cargar la página
+      window.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const productos = await obtenerProductos();
+          cargarProductos(productos);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+      // Botón para ver el carrito
+      document
+        .getElementById("btn_verCarrito")
+        .addEventListener("click", () => {
+          window.location.href = "BigCart.html";
+        });
+
+      // Botón para redirigir a la página de agregar productos
+      document
+        .getElementById("btn_add_newProduct")
+        .addEventListener("click", () => {
+          window.location.href = "add_product.html";
+        });
     </script>
-</body>
+  </body>
 </html>
