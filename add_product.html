@@ -76,6 +76,7 @@
 
     <script>
         // Validar sesión
+        let token = sessionStorage.getItem("gToken");
         window.addEventListener("DOMContentLoaded", () => {
            if (!token) {
             window.location.href = "/";
