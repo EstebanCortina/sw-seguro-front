@@ -141,7 +141,7 @@
       let dashBtn = document.getElementById('dashBtn');
       // Función para ir a dashboard si es profe (lo sé, teniendo la discriminacion por userType en el window.onload, no necesito validar esto)
       dashBtn.addEventListener('click', () => {
-        if (prueba.user_type === "profesor") {
+        if (info.user_type === "profesor") {
           window.location.href = "/dashboard.html";
         } else {
           window.location.href = "/";
@@ -154,7 +154,7 @@
 
       // Función para ocultar boton dashboard si es alumno
       window.onload = () => {
-        if (prueba.user_type === "alumno") {
+        if (info.user_type === "alumno") {
           dashBtn.style.display = "none";
         }
       }
