@@ -64,7 +64,7 @@
         background-color: #45a049;
       }
     </style>
-    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script id="google-script" src="https://accounts.google.com/gsi/client" async></script>
   </head>
 
   <body>
@@ -127,7 +127,6 @@
     });
 
 
-      const sign_in_button = document.getElementById("sign-in");
       const email = document.getElementById("email");
       const pass = document.getElementById("pass");
       const loading = document.getElementById("loading");
@@ -161,12 +160,6 @@
             alert("Revisa tus credenciales");
           });
       }
-
-      sign_in_button.addEventListener("click", () => {
-        email.disabled = true;
-        pass.disabled = true;
-        google_container.display = "block";
-      });
     </script>
   </body>
 </html>
